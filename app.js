@@ -5,9 +5,6 @@ const request = require("request");
 app.set("view engine", "ejs");
 
 var campgrounds = [
-    // {
-    //     name: "Bir", image: "http://www.unsplash.com/photos/1bSqus7DHro"
-    // },
     {
         name: "Ladakh", image: "https://www.easemytrip.com/travel/img/ladakh-camping.jpg"
     },
