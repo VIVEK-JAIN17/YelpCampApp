@@ -8,7 +8,8 @@ const assert = require('assert');
 // SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 const Campground = mongoose.model("Campground", campgroundSchema);
@@ -25,7 +26,8 @@ app.set("view engine", "ejs");
 
 //     Campground.create({
 //         name: "Rishikesh",
-//         image: "https://www.easemytrip.com/travel/img/rishikesh-camping.jpg"
+//         image: "https://www.easemytrip.com/travel/img/rishikesh-camping.jpg",
+//         description: "Located in the foothills of Himalayas, Rishikesh is among the best camping destinations in India. The amazing Rishikesh camp is not only close to the lush green nature but also has a more tranquil feel. For people looking for some peace away from the chaos of city life, there are tents here, styled in a hermit fashion and are designed to give you a total detached time. The food served here is completely organic and you can also try activities like rafting, trekking, yoga and spa sessions. Camping in Rishikesh is something you should never miss!"
 
 //     }).then((camp) => {
 //         console.log("Successfully Created Campground", camp);
@@ -33,11 +35,6 @@ app.set("view engine", "ejs");
 
 //     }).then((camps) => {
 //         console.log('Found Some Camps', camps);
-
-//         return Campground.deleteMany({ name: 'Rishikesh' });
-
-//     }).then((camp) => {
-//         console.log("Deleted a campground", camp);
 
 //     }).catch((err) => console.log(err));
 
@@ -54,18 +51,21 @@ app.get("/", function (req, res) {
     res.render("home");
 });
 
+// INDEX : Shows all the Items(here, Campgrounds)
 app.get("/campgrounds", function (req, res) {
     Campground.find({})
         .then((campgrounds) => {
-            res.render("campgrounds", { campgrounds: campgrounds });
+            res.render("index", { campgrounds: campgrounds });
 
         }).catch((err) => console.log(err));
 });
 
+// CREATE : Actually creates a new item (here, campground)
 app.post("/campgrounds", function (req, res) {
     var name = req.body.name;
     var image = req.body.image;
-    var newCampground = { name: name, image: image }
+    var desc = req.body.desc;
+    var newCampground = { name: name, image: image, description: desc }
     Campground.create(newCampground)
         .then((camp) => {
             console.log("Successfully posted a new camp on website !", camp);
@@ -77,9 +77,20 @@ app.post("/campgrounds", function (req, res) {
         });
 });
 
+// NEW : Shows a form to create a new item (here, campground)
 app.get("/campgrounds/new", function (req, res) {
     res.render("new");
 });
+
+// SHOW : Shows the details of a particular item (here, campground)
+app.get("/campground/:id", function (req, res) {
+    Campground.findById(req.params.id)
+        .then((campDetails) => {
+            console.log("Details of the campground are ", campDetails);
+            res.render("show", { campground: campDetails });
+
+        }).catch((err) => console.log(err));
+})
 
 app.listen(3000, function () {
     console.log("The Yelp Camp Server is up and running !");

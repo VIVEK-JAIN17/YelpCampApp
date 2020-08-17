@@ -17,7 +17,7 @@
         <div class="col-10 col-md-6 col-lg-4 my-3">
             <div class="card">
                 <div class="card-img">
-                    <img class="img-fluid" src="<%= campground.image %>" alt="will add soon">
+                    <img class="img-fluid" src="<%= campground.image %>" alt="<%= campground.name%>">
                 </div>
                 <div class="card-body">
                     <div class="card-title">
@@ -26,6 +26,7 @@
                     <div class="card-subtitle">card-subtitle</div>
                     <div class="card-text">
                         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis, amet.</p>
+                        <a href="/campground/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
                     </div>
                 </div>
             </div>

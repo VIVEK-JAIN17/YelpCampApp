@@ -1,0 +1,22 @@
+<%- include('partials/header') -%>
+<header class="jumbotron">
+    <div class="container text-center">
+        <h1 class="display-3">Welcome to Yelp Camp!</h1>
+        <p class="lead pt-4">View our hand-picked camp sites from all over the world!</p>
+        <!-- <a class="btn btn-primary btn-lg mt-3" href="/campgrounds/new">Add new Campground</a> -->
+    </div>
+</header>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="text-center col-md-10 col-lg-9">
+            <img class="img-thumbnail" src="<%= campground.image%>" alt="<%= campground.image%>">
+            <div class="caption px-3">
+                <h1 class="display-4"><%= campground.name%></h1>
+                <p class="lead text-justify"><%= campground.description %></p>
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+<%- include('partials/footer') -%>
