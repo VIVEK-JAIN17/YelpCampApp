@@ -16,7 +16,7 @@ const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Connection URL
 const url = 'mongodb://localhost:27017/YelpCamp';
-const connect = mongoose.connect(url, { useNewUrlParser: true });
+const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
