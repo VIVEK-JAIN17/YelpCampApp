@@ -1,0 +1,82 @@
+.jumbotron {
+  padding: 4rem 0;
+  margin-bottom: 2rem;
+}
+
+.jumbotron h1 {
+  font-weight: 300;
+}
+
+.jumbotron p {
+  font-size: 1.5rem;
+}
+
+/* INDEX */
+ul.list-unstyled > li {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #32373d6c;
+  margin-bottom: 1rem;
+}
+
+ul.list-unstyled > li:last-child {
+  border-bottom: none;
+}
+
+/* ul.list-unstyled > li.media header.header {
+  text-transform: capitalize;
+} */
+
+header {
+  text-transform: capitalize;
+}
+
+/* SHOW */
+
+header.header .title {
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+@media all and (max-width: 768px) {
+  .jumbotron h1 {
+    font-size: 2.4rem;
+    padding: 0.25rem 0;
+    margin: 0;
+  }
+
+  .jumbotron p {
+    font-size: 1.2rem;
+  }
+
+  /* SHOW */
+  .desc {
+    text-align: justify;
+  }
+
+  header.header .title {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+  }
+
+  /* BUTTONS */
+  .btn {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+@media all and (max-width: 568px) {
+  .jumbotron h1 {
+    font-size: 1.8rem;
+    padding: 0.25rem 0;
+    margin: 0;
+  }
+
+  .jumbotron p {
+    font-size: 1rem;
+  }
+}

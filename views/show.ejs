@@ -7,13 +7,17 @@
     </div>
 </header>
 
-<div class="container">
+<div class="container-sm">
     <div class="row justify-content-center">
-        <div class="text-center col-md-10 col-lg-9">
-            <img class="img-thumbnail" src="<%= campground.image%>" alt="<%= campground.image%>">
-            <div class="caption px-3">
-                <h1 class="display-4"><%= campground.name%></h1>
-                <p class="lead text-justify"><%= campground.description %></p>
+        <div class="col-lg-9">
+            <header class="header">
+                <h1 class="title"><%= campground.name%></h1>
+            </header>
+            <div class="text-center my-3">
+                <img class="img-fluid" src="<%= campground.image%>" alt="<%= campground.image%>">
+            </div>
+            <div class="desc pt-3">
+                <p class="lead"><%= campground.description %></p>
             </div>
         </div>
     </div>
