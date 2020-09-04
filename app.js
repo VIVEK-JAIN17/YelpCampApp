@@ -3,16 +3,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const request = require("request");
 const mongoose = require('mongoose');
+const Campground = require('./models/campground');
 const assert = require('assert');
-
-// SCHEMA SETUP
-const campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-const Campground = mongoose.model("Campground", campgroundSchema);
 
 // Connection URL
 const url = 'mongodb://localhost:27017/YelpCamp';
