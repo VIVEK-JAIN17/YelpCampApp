@@ -4,7 +4,10 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
+const seedDB = require('./seed');
 const assert = require('assert');
+
+seedDB();
 
 // Connection URL
 const url = 'mongodb://localhost:27017/YelpCamp';
@@ -20,12 +23,12 @@ app.use(express.static(__dirname + '/public'));
 // 3. A route to create/sbmit a new campground
 // 4. A route that will contain the form for creating a new campground
 
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
     res.render("home");
 });
 
 // INDEX : Shows all the Items(here, Campgrounds)
-app.get("/campgrounds", function (req, res) {
+app.get("/campgrounds", (req, res) => {
     Campground.find({})
         .then((campgrounds) => {
             res.render("index", { campgrounds: campgrounds });
@@ -34,7 +37,7 @@ app.get("/campgrounds", function (req, res) {
 });
 
 // CREATE : Actually creates a new item (here, campground)
-app.post("/campgrounds", function (req, res) {
+app.post("/campgrounds", (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.desc;
@@ -51,18 +54,31 @@ app.post("/campgrounds", function (req, res) {
 });
 
 // NEW : Shows a form to create a new item (here, campground)
-app.get("/campgrounds/new", function (req, res) {
+app.get("/campgrounds/new", (req, res) => {
     res.render("new");
 });
 
 // SHOW : Shows the details of a particular item (here, campground)
+// app.get("/campground/:id", function (req, res) {
+//     Campground.findById(req.params.id)
+//         .then((campDetails) => {
+//             console.log("Details of the campground are ", campDetails);
+//             res.render("show", { campground: campDetails });
+
+//         }).catch((err) => console.log(err));
+// })
+
+// SHOW : Shows the details of a particular item (here, campground)
 app.get("/campground/:id", function (req, res) {
-    Campground.findById(req.params.id)
-        .then((campDetails) => {
+    // couldn't figure out how to use promises here!
+    Campground.findById(req.params.id).populate("comments").exec((err, campDetails) => {
+        if (err) {
+            console.log(err);
+        } else {
             console.log("Details of the campground are ", campDetails);
             res.render("show", { campground: campDetails });
-
-        }).catch((err) => console.log(err));
+        }
+    });
 })
 
 app.listen(3001, function () {

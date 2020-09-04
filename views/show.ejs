@@ -21,6 +21,19 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <h2>Comments</h2>
+            <ul class="list-unstyled">
+                <%campground.comments.forEach(comment => { %>
+                <li class="mb-4 border-bottom">
+                    <div class="mb-2"><%= comment.comment %></div>
+                    <strong><i class="fa fa-user-circle-o"></i> <%= comment.author %></strong>
+                </li>
+                <%})%>
+            </ul>
+        </div>
+    </div>
 </div>
 <p></p>
 <%- include('partials/footer') -%>
