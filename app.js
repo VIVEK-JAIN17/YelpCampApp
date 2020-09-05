@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const mongoose = require('mongoose');
 const Campground = require('./models/campground');
+const Comment = require('./models/comment');
 const seedDB = require('./seed');
 const assert = require('assert');
 
@@ -87,7 +88,29 @@ app.get("/campgrounds/:id/comments/new", (req, res) => {
             res.render("comments/new", { campground: campground });
 
         }).catch((err) => { console.log(err) });
-})
+});
+
+app.post("/campgrounds/:id/comments", (req, res) => {
+    Campground.findById(req.params.id)
+        .then((camp) => {
+            Comment.create(req.body.comment)
+                .then((comment) => {
+                    camp.comments.push(comment);
+                    camp.save()
+                        .then(() => {
+                            console.log("Comment Posted Successfully !");
+                            res.redirect("/campgrounds/" + req.params.id);
+
+                        }).catch((err) => { console.log("Error while posting comment\n", err) })
+
+                }).catch((err) => {
+                    console.log("Error while creating Comment\n", err);
+                });
+
+        }).catch((err) => {
+            console.log("Camp Not Found\n", err);
+        })
+});
 
 app.listen(3001, function () {
     console.log("The Yelp Camp Server is up and running !");
