@@ -1,4 +1,4 @@
-<%- include('partials/header') -%>
+<%- include('../partials/header') -%>
 <header class="jumbotron">
     <div class="container text-center">
         <h1 class="display-3">Welcome to Yelp Camp!</h1>
@@ -26,7 +26,7 @@
                     <!-- <div class="subtitle">card-subtitle</div> -->
                     <div class="card-text">
                         <p><%= campground.description.substring(0,100) %>...</p>
-                        <a href="/campground/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                         </header>
                         <div>
                             <p><%- campground.description.substring(0,100) -%>...</p>
-                            <a href="/campground/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
+                            <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
                         </div>
                     </div>
                 </li>
@@ -58,4 +58,4 @@
         </div>
     </div>
 </div>
-<%- include('partials/footer') -%>
+<%- include('../partials/footer') -%>

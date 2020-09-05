@@ -1,4 +1,4 @@
-<%- include('partials/header') -%>
+<%- include('../partials/header') -%>
 <header class="jumbotron">
     <div class="container text-center">
         <h1 class="display-3">Welcome to Yelp Camp!</h1>
@@ -27,13 +27,14 @@
             <ul class="list-unstyled">
                 <%campground.comments.forEach(comment => { %>
                 <li class="mb-4 border-bottom">
-                    <div class="mb-2"><%= comment.comment %></div>
                     <strong><i class="fa fa-user-circle-o"></i> <%= comment.author %></strong>
+                    <div class="mb-2"><%= comment.comment %></div>
                 </li>
                 <%})%>
             </ul>
+            <a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-primary btn-sm">Add Comment</a>
         </div>
     </div>
 </div>
 <p></p>
-<%- include('partials/footer') -%>
+<%- include('../partials/footer') -%>

@@ -7,7 +7,7 @@ const Campground = require('./models/campground');
 const seedDB = require('./seed');
 const assert = require('assert');
 
-seedDB();
+// seedDB();
 
 // Connection URL
 const url = 'mongodb://localhost:27017/YelpCamp';
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 app.get("/campgrounds", (req, res) => {
     Campground.find({})
         .then((campgrounds) => {
-            res.render("index", { campgrounds: campgrounds });
+            res.render("campgrounds/index", { campgrounds: campgrounds });
 
         }).catch((err) => console.log(err));
 });
@@ -55,7 +55,7 @@ app.post("/campgrounds", (req, res) => {
 
 // NEW : Shows a form to create a new item (here, campground)
 app.get("/campgrounds/new", (req, res) => {
-    res.render("new");
+    res.render("campgrounds/new");
 });
 
 // SHOW : Shows the details of a particular item (here, campground)
@@ -69,16 +69,24 @@ app.get("/campgrounds/new", (req, res) => {
 // })
 
 // SHOW : Shows the details of a particular item (here, campground)
-app.get("/campground/:id", function (req, res) {
+app.get("/campgrounds/:id", function (req, res) {
     // couldn't figure out how to use promises here!
     Campground.findById(req.params.id).populate("comments").exec((err, campDetails) => {
         if (err) {
             console.log(err);
         } else {
             console.log("Details of the campground are ", campDetails);
-            res.render("show", { campground: campDetails });
+            res.render("campgrounds/show", { campground: campDetails });
         }
     });
+})
+
+app.get("/campgrounds/:id/comments/new", (req, res) => {
+    Campground.findById(req.params.id)
+        .then((campground) => {
+            res.render("comments/new", { campground: campground });
+
+        }).catch((err) => { console.log(err) });
 })
 
 app.listen(3001, function () {
