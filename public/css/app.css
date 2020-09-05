@@ -12,13 +12,13 @@
 }
 
 /* INDEX */
-ul.list-unstyled > li {
+ul.list-unstyled.index > li {
   padding: 1rem 1.25rem;
   border-bottom: 1px solid #32373d6c;
   margin-bottom: 1rem;
 }
 
-ul.list-unstyled > li:last-child {
+ul.list-unstyled.index > li:last-child {
   border-bottom: none;
 }
 
