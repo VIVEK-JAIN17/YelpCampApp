@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const request = require("request");
 const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const Campground = require('./models/campground');
 const Comment = require('./models/comment');
+const User = require('./models/user');
+// const session = require('express-session');
 const seedDB = require('./seed');
-const assert = require('assert');
 
 // seedDB();
 
@@ -17,6 +19,20 @@ const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopolog
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+
+// PASSPORT CONFIGURATION
+app.use(require('express-session')({
+    name: "session-id",
+    secret: "Passport-Authentication",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Creating several routes for the app
 // 1. A route to the landing page
@@ -76,11 +92,15 @@ app.get("/campgrounds/:id", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Details of the campground are ", campDetails);
+            console.log("Found the campground correctly !!");
             res.render("campgrounds/show", { campground: campDetails });
         }
     });
 })
+
+// ===========================================================
+// COMMENT ROUTES
+// ===========================================================
 
 app.get("/campgrounds/:id/comments/new", (req, res) => {
     Campground.findById(req.params.id)
@@ -111,6 +131,36 @@ app.post("/campgrounds/:id/comments", (req, res) => {
             console.log("Camp Not Found\n", err);
         })
 });
+
+// ===========================================================
+// AUTHENTICAITON ROUTES
+// ===========================================================
+
+// Show register form/page
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+// Registers a user 
+app.post("/register", (req, res) => {
+    var newUser = new User({ username: req.body.username });
+    User.register(newUser, req.body.password, (err, user) => {
+        if (err) {
+            console.log("Error while signing up !!\n\n", err);
+            return res.redirect("/register");
+        }
+        // res.redirect("/login");
+        passport.authenticate('local')(req, res, function () {
+            console.log("User registered successfully !!\n");
+            res.redirect("/campgrounds");
+
+        });
+    });
+});
+
+connect.then((db) => {
+    console.log("Correctly Connected to MongoDB Server");
+}).catch((err) => console.log(err));
 
 app.listen(3001, function () {
     console.log("The Yelp Camp Server is up and running !");
