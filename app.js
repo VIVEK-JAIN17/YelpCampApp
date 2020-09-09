@@ -7,7 +7,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const Campground = require('./models/campground');
 const Comment = require('./models/comment');
 const User = require('./models/user');
-// const session = require('express-session');
 const seedDB = require('./seed');
 
 // seedDB();
@@ -34,6 +33,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
 // Creating several routes for the app
 // 1. A route to the landing page
 // 2. A route to view all the campgrounds
@@ -54,7 +58,7 @@ app.get("/campgrounds", (req, res) => {
 });
 
 // CREATE : Actually creates a new item (here, campground)
-app.post("/campgrounds", (req, res) => {
+app.post("/campgrounds", isLoggedin, (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.desc;
@@ -71,7 +75,7 @@ app.post("/campgrounds", (req, res) => {
 });
 
 // NEW : Shows a form to create a new item (here, campground)
-app.get("/campgrounds/new", (req, res) => {
+app.get("/campgrounds/new", isLoggedin, (req, res) => {
     res.render("campgrounds/new");
 });
 
@@ -102,7 +106,7 @@ app.get("/campgrounds/:id", function (req, res) {
 // COMMENT ROUTES
 // ===========================================================
 
-app.get("/campgrounds/:id/comments/new", (req, res) => {
+app.get("/campgrounds/:id/comments/new", isLoggedin, (req, res) => {
     Campground.findById(req.params.id)
         .then((campground) => {
             res.render("comments/new", { campground: campground });
@@ -110,7 +114,7 @@ app.get("/campgrounds/:id/comments/new", (req, res) => {
         }).catch((err) => { console.log(err) });
 });
 
-app.post("/campgrounds/:id/comments", (req, res) => {
+app.post("/campgrounds/:id/comments", isLoggedin, (req, res) => {
     Campground.findById(req.params.id)
         .then((camp) => {
             Comment.create(req.body.comment)
@@ -138,25 +142,68 @@ app.post("/campgrounds/:id/comments", (req, res) => {
 
 // Show register form/page
 app.get("/register", (req, res) => {
+    if (req.user) {
+        return res.sendStatus(403);
+    }
     res.render("register");
 });
 
 // Registers a user 
 app.post("/register", (req, res) => {
-    var newUser = new User({ username: req.body.username });
-    User.register(newUser, req.body.password, (err, user) => {
-        if (err) {
-            console.log("Error while signing up !!\n\n", err);
-            return res.redirect("/register");
-        }
-        // res.redirect("/login");
-        passport.authenticate('local')(req, res, function () {
-            console.log("User registered successfully !!\n");
-            res.redirect("/campgrounds");
+    if (!req.user) {
+        var newUser = new User({ username: req.body.username });
+        User.register(newUser, req.body.password, (err, user) => {
+            if (err) {
+                console.log("Error while signing up !!\n\n", err);
+                return res.redirect("/register");
+            }
+            // res.redirect("/login");
+            passport.authenticate('local')(req, res, function () {
+                console.log("User registered successfully !!\n");
+                res.redirect("/campgrounds");
 
+            });
         });
-    });
+    } else {
+        return res.sendStatus(403);
+    }
 });
+
+app.get("/login", (req, res) => {
+    if (req.user) {
+        return res.sendStatus(403);
+    }
+    res.render("login");
+});
+
+app.post("/login", passport.authenticate('local', {
+    // successRedirect: "/campgrounds",
+    failureRedirect: "/login",
+    // failureFlash: true
+}), (req, res) => {
+    // if (req.user) {
+    //     return res.sendStatus(403);
+    // }
+    console.log("User " + req.body.username + " loggedin successfully !!");
+    console.log("sessoin started \n", req.session);
+    res.redirect("/campgrounds");
+});
+
+app.get("/logout", isLoggedin, (req, res) => {
+    // req.logOut();
+    console.log("logging out user ... " + req.session.passport.user);
+    req.session.destroy();
+    res.clearCookie('session-id');
+    console.log("logged out sccessfully");
+    res.redirect("/");
+});
+
+function isLoggedin(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 connect.then((db) => {
     console.log("Correctly Connected to MongoDB Server");
