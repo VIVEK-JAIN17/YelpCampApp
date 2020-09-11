@@ -4,10 +4,11 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const Campground = require('./models/campground');
-const Comment = require('./models/comment');
 const User = require('./models/user');
 const seedDB = require('./seed');
+const authRouter = require('./routes/auth');
+const campRouter = require('./routes/campgrounds');
+const commentRouter = require('./routes/comments');
 
 // seedDB();
 
@@ -38,172 +39,13 @@ app.use((req, res, next) => {
     next();
 });
 
-// Creating several routes for the app
-// 1. A route to the landing page
-// 2. A route to view all the campgrounds
-// 3. A route to create/sbmit a new campground
-// 4. A route that will contain the form for creating a new campground
-
 app.get("/", (req, res) => {
     res.render("home");
 });
 
-// INDEX : Shows all the Items(here, Campgrounds)
-app.get("/campgrounds", (req, res) => {
-    Campground.find({})
-        .then((campgrounds) => {
-            res.render("campgrounds/index", { campgrounds: campgrounds });
-
-        }).catch((err) => console.log(err));
-});
-
-// CREATE : Actually creates a new item (here, campground)
-app.post("/campgrounds", isLoggedin, (req, res) => {
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.desc;
-    var newCampground = { name: name, image: image, description: desc }
-    Campground.create(newCampground)
-        .then((camp) => {
-            console.log("Successfully posted a new camp on website !", camp);
-            res.redirect("/campgrounds");
-
-        }).catch((err) => {
-            console.log("An Error Occured while posting !", err);
-            res.send("<h1>An Error Occured while posting ! </h1>")
-        });
-});
-
-// NEW : Shows a form to create a new item (here, campground)
-app.get("/campgrounds/new", isLoggedin, (req, res) => {
-    res.render("campgrounds/new");
-});
-
-// SHOW : Shows the details of a particular item (here, campground)
-// app.get("/campground/:id", function (req, res) {
-//     Campground.findById(req.params.id)
-//         .then((campDetails) => {
-//             console.log("Details of the campground are ", campDetails);
-//             res.render("show", { campground: campDetails });
-
-//         }).catch((err) => console.log(err));
-// })
-
-// SHOW : Shows the details of a particular item (here, campground)
-app.get("/campgrounds/:id", function (req, res) {
-    // couldn't figure out how to use promises here!
-    Campground.findById(req.params.id).populate("comments").exec((err, campDetails) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Found the campground correctly !!");
-            res.render("campgrounds/show", { campground: campDetails });
-        }
-    });
-})
-
-// ===========================================================
-// COMMENT ROUTES
-// ===========================================================
-
-app.get("/campgrounds/:id/comments/new", isLoggedin, (req, res) => {
-    Campground.findById(req.params.id)
-        .then((campground) => {
-            res.render("comments/new", { campground: campground });
-
-        }).catch((err) => { console.log(err) });
-});
-
-app.post("/campgrounds/:id/comments", isLoggedin, (req, res) => {
-    Campground.findById(req.params.id)
-        .then((camp) => {
-            Comment.create(req.body.comment)
-                .then((comment) => {
-                    camp.comments.push(comment);
-                    camp.save()
-                        .then(() => {
-                            console.log("Comment Posted Successfully !");
-                            res.redirect("/campgrounds/" + req.params.id);
-
-                        }).catch((err) => { console.log("Error while posting comment\n", err) })
-
-                }).catch((err) => {
-                    console.log("Error while creating Comment\n", err);
-                });
-
-        }).catch((err) => {
-            console.log("Camp Not Found\n", err);
-        })
-});
-
-// ===========================================================
-// AUTHENTICAITON ROUTES
-// ===========================================================
-
-// Show register form/page
-app.get("/register", (req, res) => {
-    if (req.user) {
-        return res.sendStatus(403);
-    }
-    res.render("register");
-});
-
-// Registers a user 
-app.post("/register", (req, res) => {
-    if (!req.user) {
-        var newUser = new User({ username: req.body.username });
-        User.register(newUser, req.body.password, (err, user) => {
-            if (err) {
-                console.log("Error while signing up !!\n\n", err);
-                return res.redirect("/register");
-            }
-            // res.redirect("/login");
-            passport.authenticate('local')(req, res, function () {
-                console.log("User registered successfully !!\n");
-                res.redirect("/campgrounds");
-
-            });
-        });
-    } else {
-        return res.sendStatus(403);
-    }
-});
-
-app.get("/login", (req, res) => {
-    if (req.user) {
-        return res.sendStatus(403);
-    }
-    res.render("login");
-});
-
-app.post("/login", passport.authenticate('local', {
-    // successRedirect: "/campgrounds",
-    failureRedirect: "/login",
-    // failureFlash: true
-}), (req, res) => {
-    // if (req.user) {
-    //     return res.sendStatus(403);
-    // }
-    console.log("User " + req.body.username + " loggedin successfully !!");
-    console.log("sessoin started \n", req.session);
-    res.redirect("/campgrounds");
-});
-
-app.get("/logout", isLoggedin, (req, res) => {
-    // req.logOut();
-    console.log("logging out user ... " + req.session.passport.user);
-    req.session.destroy();
-    res.clearCookie('session-id');
-    console.log("logged out sccessfully");
-    res.redirect("/");
-});
-
-function isLoggedin(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
+app.use("/", authRouter);
+app.use("/campgrounds", campRouter);
+app.use("/campgrounds/:id/comments", commentRouter);
 
 connect.then((db) => {
     console.log("Correctly Connected to MongoDB Server");
@@ -211,4 +53,4 @@ connect.then((db) => {
 
 app.listen(3001, function () {
     console.log("The Yelp Camp Server is up and running !");
-})
+});
