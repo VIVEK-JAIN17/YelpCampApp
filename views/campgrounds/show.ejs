@@ -43,7 +43,7 @@
                     <%campground.comments.forEach(comment => { %>
                     <li class="mb-3">
                         <small class="float-right">10 days ago</small>
-                        <strong><i class="fa fa-user-circle-o"></i> <%= comment.author %></strong>
+                        <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
                         <p class=""><%= comment.comment %></p>
                     </li>
                     <%})%>
