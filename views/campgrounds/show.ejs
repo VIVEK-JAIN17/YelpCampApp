@@ -31,13 +31,14 @@
                     </a>
                     <div class="desc pt-3">
                         <p class="text-justify"><%= campground.description %></p>
+                        <p>Submitted By <em><%= campground.author.username %></em></p>
                     </div>
                 </div>
             </div>
             <div class=" mb-5 p-3 bg-light border border-light rounded">
                 <a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-primary btn-sm float-right">
-                    Add Comment</a>
-                <h4 class="pl-0">Comments</h4>
+                    Leave a Review</a>
+                <h4 class="pl-0">Reviews</h4>
                 <hr>
                 <ul class="list-unstyled">
                     <%campground.comments.forEach(comment => { %>

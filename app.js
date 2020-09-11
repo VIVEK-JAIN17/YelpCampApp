@@ -10,7 +10,7 @@ const authRouter = require('./routes/auth');
 const campRouter = require('./routes/campgrounds');
 const commentRouter = require('./routes/comments');
 
-// seedDB();
+seedDB();
 
 // Connection URL
 const url = 'mongodb://localhost:27017/YelpCamp';

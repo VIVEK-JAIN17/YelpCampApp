@@ -18,7 +18,7 @@ router.post("/", isLoggedin, (req, res) => {
         .then((camp) => {
             Comment.create(req.body.comment)
                 .then((comment) => {
-                    comment.author.id = req.user.id;
+                    comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
                     comment.save();
                     camp.comments.push(comment);

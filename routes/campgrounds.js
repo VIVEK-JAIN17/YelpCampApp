@@ -24,7 +24,11 @@ router.post("/", isLoggedin, (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.desc;
-    var newCampground = { name: name, image: image, description: desc }
+    var author = {
+        "id": req.user._id,
+        "username": req.user.username
+    }
+    var newCampground = { name: name, image: image, description: desc, author: author }
     Campground.create(newCampground)
         .then((camp) => {
             console.log("Successfully posted a new camp on website !", camp);

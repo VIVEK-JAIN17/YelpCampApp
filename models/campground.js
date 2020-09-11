@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Comment = require('./comment');
 
 // SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
@@ -14,6 +13,15 @@ const campgroundSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: {
+            type: String
+        }
     },
     comments: [
         {
