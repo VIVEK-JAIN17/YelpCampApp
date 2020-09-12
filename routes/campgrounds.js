@@ -55,6 +55,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// EDIT : Renders a form to Update Campground
 router.get("/:id/edit", verifyuser, (req, res) => {
     Campground.findById(req.params.id)
         .then((campground) => {
@@ -63,6 +64,7 @@ router.get("/:id/edit", verifyuser, (req, res) => {
         }).catch((err) => { console.log(err); });
 });
 
+// UPDATE : Actually Updates a Campground 
 router.put("/:id", verifyuser, (req, res) => {
     Campground.findByIdAndUpdate(req.params.id, req.body.camp)
         .then((campground) => {
@@ -72,6 +74,7 @@ router.put("/:id", verifyuser, (req, res) => {
         }).catch((err) => { console.log(err); });
 });
 
+// DELETE : Deletes a Campground
 router.delete("/:id", verifyuser, (req, res) => {
     Campground.findByIdAndRemove(req.params.id)
         .then((campground) => {

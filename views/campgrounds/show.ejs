@@ -51,7 +51,18 @@
                     <li class="mb-3">
                         <small class="float-right">10 days ago</small>
                         <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
-                        <p class=""><%= comment.comment %></p>
+                        <div>
+                            <small class="float-right">
+                                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">edit</a>
+                                <form class="d-inline ml-2" method="POST"
+                                    action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE">
+                                    <button class="btn btn-outline-danger btn-sm" type="submit">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </small>
+                            <p class=""><%= comment.comment %></p>
+                        </div>
                     </li>
                     <%})%>
                 </ul>
