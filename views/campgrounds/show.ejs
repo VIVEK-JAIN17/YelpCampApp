@@ -7,7 +7,7 @@
     </div>
 </header>
 
-<div class="container-lg px-5">
+<div class="container px-5">
     <div class="row justify-content-center">
         <div class="col-md-3 mb-4">
             <p class="lead">YelpCamp</p>
@@ -21,7 +21,7 @@
         <div class="col-md-9">
             <div class="figure border mb-4 rounded">
                 <img class="figure-img img-fluid" width="100%" src="<%= campground.image%>"
-                    alt="<%= campground.image%>">
+                    alt="<%= campground.name%>" />
                 <div class="figure-caption px-2">
                     <span>
                         <h5 class="title float-right">$9.00/night</h5>
@@ -29,9 +29,13 @@
                     <a href="/campgrounds">
                         <h4><%= campground.name%></h4>
                     </a>
-                    <div class="desc pt-3">
+                    <div class="desc py-3">
                         <p class="text-justify"><%= campground.description %></p>
                         <p>Submitted By <em><%= campground.author.username %></em></p>
+                        <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning"> Edit </a>
+                        <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>

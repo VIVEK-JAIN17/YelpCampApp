@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Campground = require('../models/campground');
+const Comment = require('../models/comment');
 
 // INDEX : Shows all the Items(here, Campgrounds)
 router.get("/", (req, res) => {
@@ -52,6 +53,39 @@ router.get("/:id", (req, res) => {
             res.render("campgrounds/show", { campground: campDetails });
         }
     });
+});
+
+router.get("/:id/edit", (req, res) => {
+    Campground.findById(req.params.id)
+        .then((campground) => {
+            res.render("campgrounds/edit", { campground: campground });
+
+        }).catch((err) => { console.log(err); });
+});
+
+router.put("/:id", (req, res) => {
+    Campground.findByIdAndUpdate(req.params.id, req.body.camp)
+        .then((campground) => {
+            console.log("Successfully Updated Campground !!\n", campground);
+            res.redirect("/campgrounds/" + req.params.id);
+
+        }).catch((err) => { console.log(err); });
+});
+
+router.delete("/:id", (req, res) => {
+    Campground.findByIdAndRemove(req.params.id)
+        .then((campground) => {
+            campground.comments.forEach(comment => {
+                Comment.findByIdAndRemove(comment)
+                    .then(() => { console.log("comment deleted !!"); })
+                    .catch((err) => { console.log(err); })
+            });
+
+        }).then(() => {
+            console.log("Successfully Deleted Campground !");
+            res.redirect("/campgrounds");
+
+        }).catch((err) => { console.log(err); });
 });
 
 // SHOW : Shows the details of a particular item (here, campground)
