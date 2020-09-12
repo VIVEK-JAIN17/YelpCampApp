@@ -42,7 +42,7 @@ router.post("/", isLoggedin, (req, res) => {
 });
 
 // COMMENTS EDIT (RENDERS EDIT COMMENT FORM)
-router.get("/:commentId/edit", (req, res) => {
+router.get("/:commentId/edit", verifyuser, (req, res) => {
     Comment.findById(req.params.commentId)
         .then((comment) => {
             res.render("comments/edit", {
@@ -54,7 +54,7 @@ router.get("/:commentId/edit", (req, res) => {
 });
 
 // COMMENTS UPDATE (UPDATES COMMENT)
-router.put("/:commentId", (req, res) => {
+router.put("/:commentId", verifyuser, (req, res) => {
     Comment.findByIdAndUpdate(req.params.commentId, req.body.comment)
         .then((comment) => {
             console.log(req.body.comment)
@@ -64,7 +64,7 @@ router.put("/:commentId", (req, res) => {
 });
 
 // COMMENTS DELETE (DELETES A COMMENT)
-router.delete("/:commentId", (req, res) => {
+router.delete("/:commentId", verifyuser, (req, res) => {
     Comment.findByIdAndRemove(req.params.commentId)
         .then(() => {
             console.log("comment deleted succesfully !!");
@@ -79,5 +79,21 @@ function isLoggedin(req, res, next) {
     }
     res.redirect("/login");
 };
+
+function verifyuser(req, res, next) {
+    console.log(req.params);
+    if (req.isAuthenticated()) {
+        Comment.findById(req.params.commentId)
+            .then((comment) => {
+                if (comment.author.id.equals(req.user._id)) {
+                    return next();
+                } else {
+                    res.redirect("back");
+                }
+            }).catch((err) => { console.log(err); });
+    } else {
+        res.redirect("back");
+    }
+}
 
 module.exports = router;

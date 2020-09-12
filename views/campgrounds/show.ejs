@@ -52,6 +52,7 @@
                         <small class="float-right">10 days ago</small>
                         <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
                         <div>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
                             <small class="float-right">
                                 <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">edit</a>
                                 <form class="d-inline ml-2" method="POST"
@@ -61,6 +62,7 @@
                                     </button>
                                 </form>
                             </small>
+                            <% } %>
                             <p class=""><%= comment.comment %></p>
                         </div>
                     </li>
