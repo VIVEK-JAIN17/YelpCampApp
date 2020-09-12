@@ -55,7 +55,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.get("/:id/edit", (req, res) => {
+router.get("/:id/edit", verifyuser, (req, res) => {
     Campground.findById(req.params.id)
         .then((campground) => {
             res.render("campgrounds/edit", { campground: campground });
@@ -63,7 +63,7 @@ router.get("/:id/edit", (req, res) => {
         }).catch((err) => { console.log(err); });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", verifyuser, (req, res) => {
     Campground.findByIdAndUpdate(req.params.id, req.body.camp)
         .then((campground) => {
             console.log("Successfully Updated Campground !!\n", campground);
@@ -72,7 +72,7 @@ router.put("/:id", (req, res) => {
         }).catch((err) => { console.log(err); });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", verifyuser, (req, res) => {
     Campground.findByIdAndRemove(req.params.id)
         .then((campground) => {
             campground.comments.forEach(comment => {
@@ -104,6 +104,21 @@ function isLoggedin(req, res, next) {
         return next();
     }
     res.redirect("/login");
+}
+
+function verifyuser(req, res, next) {
+    if (req.isAuthenticated()) {
+        Campground.findById(req.params.id)
+            .then((campground) => {
+                if (campground.author.id.equals(req.user._id)) {
+                    return next();
+                } else {
+                    res.redirect("back");
+                }
+            }).catch((err) => { console.log(err); });
+    } else {
+        res.redirect("back");
+    }
 }
 
 module.exports = router;
