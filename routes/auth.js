@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
+const auth = require('../middleware');
 
 router.route("/register")
     .get((req, res) => {
@@ -47,19 +48,12 @@ router.route("/login")
 
     });
 
-router.get("/logout", isLoggedin, (req, res) => {
+router.get("/logout", auth.isLoggedin, (req, res) => {
     console.log("logging out user ... " + req.session.passport.user);
     req.session.destroy();
     res.clearCookie('session-id');
     console.log("logged out sccessfully");
     res.redirect("/");
 });
-
-function isLoggedin(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-};
 
 module.exports = router;
