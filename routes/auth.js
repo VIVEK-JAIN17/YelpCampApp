@@ -7,7 +7,9 @@ const auth = require('../middleware');
 router.route("/register")
     .get((req, res) => {
         if (req.user) {
-            return res.sendStatus(403);
+            console.log(req.user);
+            req.flash("error", `You are already logged in as ${req.user.username} !!`);
+            return res.redirect("back");
         }
         res.render("register");
 
@@ -16,17 +18,20 @@ router.route("/register")
             var newUser = new User({ username: req.body.username });
             User.register(newUser, req.body.password, (err, user) => {
                 if (err) {
-                    console.log("Error while signing up !!\n\n", err);
+                    console.log("Error while signing up !!");
+                    req.flash("error", `error: ${err.message}`);
                     return res.redirect("/register");
                 }
-                passport.authenticate('local')(req, res, function () {
+                passport.authenticate('local')(req, res, () => {
                     console.log("User registered successfully !!\n");
+                    req.flash("success", `user registered successfully !! Welcome ${req.body.username} !`);
                     res.redirect("/campgrounds");
 
                 });
             });
         } else {
-            return res.sendStatus(403);
+            req.flash("error", `You are already logged in as ${req.user.username} !!`);
+            res.redirect("back");
         }
 
     });
@@ -34,15 +39,18 @@ router.route("/register")
 router.route("/login")
     .get((req, res) => {
         if (req.user) {
-            return res.sendStatus(403);
+            req.flash("error", `You are already logged in as ${req.user.username} !!`);
+            return res.redirect("back");
         }
         res.render("login");
 
     }).post(passport.authenticate('local', {
         failureRedirect: "/login",
+        failureFlash: true,
 
     }), (req, res) => {
         console.log("User " + req.body.username + " loggedin successfully !!");
+        req.flash("success", `logged in successfully !! Welcome ${req.body.username} !`);
         console.log("sessoin started \n", req.session);
         res.redirect("/campgrounds");
 

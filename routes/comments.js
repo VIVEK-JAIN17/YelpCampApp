@@ -10,9 +10,7 @@ router.get("/new", auth.isLoggedin, (req, res) => {
         .then((campground) => {
             res.render("comments/new", { campground: campground });
 
-        }).catch((err) => {
-            console.log(err)
-        });
+        }).catch((err) => { console.log(err); });
 });
 
 // COMMENTS CREATE (POSTS NEW COMMENT)
@@ -57,8 +55,8 @@ router.get("/:commentId/edit", auth.authComment, (req, res) => {
 router.put("/:commentId", auth.authComment, (req, res) => {
     Comment.findByIdAndUpdate(req.params.commentId, req.body.comment)
         .then((comment) => {
-            console.log(req.body.comment)
-            console.log("Successfully updated comment\n", comment);
+            console.log("Successfully updated comment");
+            req.flash("success", "comment updated !!");
             res.redirect("/campgrounds/" + req.params.id);
         }).catch((err) => { console.log(err); });
 });
@@ -68,6 +66,7 @@ router.delete("/:commentId", auth.authComment, (req, res) => {
     Comment.findByIdAndRemove(req.params.commentId)
         .then(() => {
             console.log("comment deleted succesfully !!");
+            req.flash("success", "your comment was deleted !!");
             res.redirect("/campgrounds/" + req.params.id);
 
         }).catch((err) => { console.log("Error deleting Comment !\n", err); });

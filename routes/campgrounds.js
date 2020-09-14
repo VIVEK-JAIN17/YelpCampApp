@@ -33,12 +33,13 @@ router.post("/", auth.isLoggedin, (req, res) => {
     var newCampground = { name: name, image: image, description: desc, author: author }
     Campground.create(newCampground)
         .then((camp) => {
-            console.log("Successfully posted a new camp on website !", camp);
+            console.log("Successfully posted a new camp on website !\n", camp);
             res.redirect("/campgrounds");
 
         }).catch((err) => {
             console.log("An Error Occured while posting !", err);
-            res.send("<h1>An Error Occured while posting ! </h1>")
+            req.flash("error", `Database error : ${err.message}`);
+            res.redirect("/campgrounds");
         });
 
 });
@@ -70,6 +71,7 @@ router.put("/:id", auth.authCamp, (req, res) => {
     Campground.findByIdAndUpdate(req.params.id, req.body.camp)
         .then((campground) => {
             console.log("Successfully Updated Campground !!\n", campground);
+            req.flash("success", "updated details of the campground !");
             res.redirect("/campgrounds/" + req.params.id);
 
         }).catch((err) => { console.log(err); });
@@ -87,6 +89,7 @@ router.delete("/:id", auth.authCamp, (req, res) => {
 
         }).then(() => {
             console.log("Successfully Deleted Campground !");
+            req.flash("success", "Successfully Deleted Campground !");
             res.redirect("/campgrounds");
 
         }).catch((err) => { console.log(err); });
