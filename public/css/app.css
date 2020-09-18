@@ -22,10 +22,6 @@ ul.list-unstyled.index > li:last-child {
   border-bottom: none;
 }
 
-/* ul.list-unstyled > li.media header.header {
-  text-transform: capitalize;
-} */
-
 header {
   text-transform: capitalize;
 }
@@ -83,4 +79,9 @@ header.header .title {
 
 div.alert {
   text-transform: uppercase;
+}
+
+/* delete button */
+button.border-none {
+  border: none !important;
 }

@@ -20,17 +20,17 @@ router.get("/new", auth.isLoggedin, (req, res) => {
 
 });
 
-
 // CREATE : Actually creates a new item (here, campground)
 router.post("/", auth.isLoggedin, (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
+    var price = req.body.price;
     var desc = req.body.desc;
     var author = {
         "id": req.user._id,
         "username": req.user.username
     }
-    var newCampground = { name: name, image: image, description: desc, author: author }
+    var newCampground = { name: name, image: image, price: price, description: desc, author: author }
     Campground.create(newCampground)
         .then((camp) => {
             console.log("Successfully posted a new camp on website !\n", camp);
@@ -94,15 +94,5 @@ router.delete("/:id", auth.authCamp, (req, res) => {
 
         }).catch((err) => { console.log(err); });
 });
-
-// SHOW : Shows the details of a particular item (here, campground)
-// .get("/campground/:id", function (req, res) {
-//     Campground.findById(req.params.id)
-//         .then((campDetails) => {
-//             console.log("Details of the campground are ", campDetails);
-//             res.render("show", { campground: campDetails });
-
-//         }).catch((err) => console.log(err));
-// })
 
 module.exports = router;

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require('mongoose-currency').loadType(mongoose);
+const Currency = mongoose.Types.Currency;
 
 // SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
@@ -9,6 +11,11 @@ const campgroundSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+    price: {
+        type: Currency,
+        required: true,
+        min: 1
     },
     description: {
         type: String,

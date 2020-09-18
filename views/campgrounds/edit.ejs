@@ -18,6 +18,10 @@
                         value="<%= campground.image %>" required>
                 </div>
                 <div class="form-group">
+                    <input class="form-control" type="number" name="camp[price]" id="price" step="0.01" min="1"
+                        value="<%= campground.price %>" required>
+                </div>
+                <div class="form-group">
                     <textarea class="form-control" type="text" name="camp[description]" id="desc" rows="10"
                         required><%= campground.description %></textarea>
                 </div>

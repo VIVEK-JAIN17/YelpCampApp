@@ -4,35 +4,22 @@ body {
 
 #navbar {
   background: transparent !important;
-  /* color: black !important; */
 }
 
-#navbar .nav-item .nav-link, #navbar .navbar-brand{
-    color: #fff;
+#navbar .nav-item .nav-link,
+#navbar .navbar-brand {
+  color: #fff;
 }
 
-/* #landing-image {
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-} */
-
-.btn-success{
-    background-color: #0ac238;
+.btn-outline-success {
+  color: #0a7c26;
+  border-color: #0ac238;
+  border: 2px solid;
 }
 
-.btn-outline-success{
-    color: #0a7c26;
-    border-color: #0ac238;
-    border: 2px solid;
-}
-
-.btn-outline-success:hover{
-    background: transparent;
-    color: #0ac238;
+.btn-outline-success:hover {
+  background: transparent;
+  color: #0ac238;
 }
 
 #link {

@@ -24,7 +24,7 @@
                     alt="<%= campground.name%>" />
                 <div class="figure-caption px-2">
                     <span>
-                        <h5 class="title float-right">$9.00/night</h5>
+                        <h5 class="title float-right">$ <%= campground.price.toFixed(2)/100 %> </h5>
                     </span>
                     <a href="/campgrounds">
                         <h4><%= campground.name%></h4>
@@ -57,7 +57,7 @@
                                 <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">edit</a>
                                 <form class="d-inline ml-2" method="POST"
                                     action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE">
-                                    <button class="btn btn-outline-danger btn-sm" type="submit">
+                                    <button class="btn btn-outline-danger btn-sm border-none" type="submit">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
