@@ -11,6 +11,15 @@
   font-size: 1.5rem;
 }
 
+/* navbar */
+.navbar .nav-item .nav-link {
+  color: #fff;
+}
+
+.navbar .nav-item .nav-link:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 /* INDEX */
 ul.list-unstyled.index > li {
   padding: 1rem 1.25rem;

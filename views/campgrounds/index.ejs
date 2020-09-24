@@ -23,7 +23,6 @@
                     <div class="card-title">
                         <h4> <%= campground.name %> </h4>
                     </div>
-                    <!-- <div class="subtitle">card-subtitle</div> -->
                     <div class="card-text">
                         <p><%= campground.description.substring(0,100) %>...</p>
                         <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
@@ -38,14 +37,13 @@
             <ul class="list-unstyled index">
                 <% campgrounds.forEach(function(campground){ %>
                 <li>
-                    <!-- class="my-4 mx-5 px-sm-3" -->
                     <div class="text-center align-self-center">
                         <img class="img-fluid pb-3" src="<%= campground.image %>" alt="<%= campground.name%>">
                     </div>
                     <div class="mb-4 text-left">
-                        <header>
-                            <h4> <%= campground.name %> </h4>
-                            <div class="text-muted">card-subtitle</div>
+                        <header class="mb-2">
+                            <h4 class="mb-1"> <%= campground.name %> </h4>
+                            <div class="text-muted"> Posted By ~ <i> <%= campground.author.username %> </i></div>
                         </header>
                         <div>
                             <p><%- campground.description.substring(0,100) -%>...</p>

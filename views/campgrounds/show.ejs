@@ -24,7 +24,7 @@
                     alt="<%= campground.name%>" />
                 <div class="figure-caption px-2">
                     <span>
-                        <h5 class="title float-right">$ <%= campground.price.toFixed(2)/100 %> </h5>
+                        <h6 class="title float-right">$ <%= campground.price.toFixed(2)/100 %>/night</h6>
                     </span>
                     <a href="/campgrounds">
                         <h4><%= campground.name%></h4>
@@ -49,7 +49,7 @@
                 <ul class="list-unstyled">
                     <%campground.comments.forEach(comment => { %>
                     <li class="mb-3">
-                        <small class="float-right">10 days ago</small>
+                        <small class="float-right"><%= comment.createdAt.toDateString() %></small>
                         <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
                         <div>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
