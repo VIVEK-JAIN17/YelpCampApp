@@ -66,6 +66,6 @@ connect.then(() => {
 
 var port = process.env.PORT || 3001;
 var host = 'localhost';
-app.listen(port, host, () => {
+app.listen(port, () => {
     console.log("The Yelp Camp Server is up and running at http://" + host + ":" + port);
 });
