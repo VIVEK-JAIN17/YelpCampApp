@@ -64,7 +64,7 @@ connect.then(() => {
     console.log("Correctly Connected to MongoDB Server at " + url);
 }).catch((err) => console.log(err));
 
-var port = 3001;
+var port = process.env.PORT || 3001;
 var host = 'localhost';
 app.listen(port, host, () => {
     console.log("The Yelp Camp Server is up and running at http://" + host + ":" + port);
