@@ -19,7 +19,7 @@ const commentRouter = require('./routes/comments');
 
 // Mongoose Config
 const mongoose = require('mongoose');
-const url = 'mongodb://localhost:27017/YelpCamp';
+const url = (process.env.DATABASEURL) || 'mongodb://localhost:27017/YelpCamp';
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Global Middlewares
