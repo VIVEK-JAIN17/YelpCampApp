@@ -2,12 +2,25 @@ const mongoose = require('mongoose'),
     passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new mongoose.Schema({
-    username: {
+    firstname: {
         type: String,
-        required: true
+        default: ""
     },
-    password: {
+    lastname: {
         type: String,
+        default: ""
+    },
+    email: {
+        type: String,
+        default: ""
+    },
+    avatar: {
+        type: String,
+        default: "https://www.easemytrip.com/travel/img/ladakh-camping.jpg"
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
