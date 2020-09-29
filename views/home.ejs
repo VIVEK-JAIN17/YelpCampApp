@@ -29,8 +29,11 @@
                     <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
                     <li class="nav-item"><a href="/register" class="nav-link">Sign Up</a></li>
                     <%} else { %>
-                    <li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-user-circle"></i>
-                            <%= currentUser.username%></a></li>
+                    <li class="nav-item">
+                        <a href="/users/<%= currentUser._id %>/profile" class="nav-link">
+                            <i class="fa fa-user-circle"></i> <%= currentUser.username%>
+                        </a>
+                    </li>
                     <li class="nav-item"><a href="/logout" class="nav-link">Log Out</a></li>
                     <% }%>
                 </ul>
@@ -50,7 +53,7 @@
     <div class="container-fluid p-0 m-0" id="landing-image">
         <div id="link">
             <h1 class="display-3 mb-3">Welcome To YelpCamp</h1>
-            <a class="btn btn-success btn-lg" href="/campgrounds">View all Campgrounds</a>
+            <a class="btn btn-success btn-lg" href="/campgrounds">Get Started</a>
         </div>
         <ul class="slideshow">
             <li class="slide"></li>

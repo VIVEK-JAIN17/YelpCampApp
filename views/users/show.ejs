@@ -1,0 +1,36 @@
+<%- include('../partials/header') -%>
+
+<h1>User Profile Page</h1>
+<div class="d-inline-block">
+    <img class="img-thumbnail" src="<%= user.avatar %>" alt="<%= user.username %>" />
+    <div class=""><%= user.email %></div>
+</div>
+<div>
+    <h2>Username <%= user.username %></h2>
+    <h3>Name <%= user.firstname + " " + user.lastname %></h3>
+</div>
+<% if(currentUser && user._id.equals(currentUser._id)) { %>
+<div><strong> Your Campgrounds</strong></div>
+<% }else { %>
+<div><strong> <%=user.username%>'s Campgrounds</strong></div>
+<% } %>
+<!-- <%= currentUser %> -->
+<ul>
+
+    <% campgrounds.forEach(campground => { %>
+    <li>
+
+        <a href="/campgrounds/<%= campground._id%>"> <%= campground.name%></a>
+        <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
+        <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning btn-sm"> <i class="fa fa-pencil"></i>
+        </a>
+        <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+        </form>
+        <% } %>
+    </li>
+    <% }) %>
+
+</ul>
+
+<%- include('../partials/footer') -%>

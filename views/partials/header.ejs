@@ -28,7 +28,7 @@
                     <li class="nav-item"><a href="/register" class="nav-link">Sign Up</a></li>
                     <%} else { %>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/users/<%= currentUser._id %>/profile" class="nav-link">
                             <i class="fa fa-user-circle"></i> <%= currentUser.username%>
                         </a>
                     </li>

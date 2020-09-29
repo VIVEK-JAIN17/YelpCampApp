@@ -16,6 +16,7 @@ const User = require('./models/user');
 const authRouter = require('./routes/auth');
 const campRouter = require('./routes/campgrounds');
 const commentRouter = require('./routes/comments');
+const userRouter = require('./routes/users');
 
 // Mongoose Config
 const mongoose = require('mongoose');
@@ -59,6 +60,7 @@ app.get("/", (req, res) => {
 app.use("/", authRouter);
 app.use("/campgrounds", campRouter);
 app.use("/campgrounds/:id/comments", commentRouter);
+app.use("/users", userRouter);
 
 connect.then(() => {
     console.log("Correctly Connected to MongoDB Server at " + url);

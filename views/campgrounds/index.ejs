@@ -25,7 +25,8 @@
                     </div>
                     <div class="card-text">
                         <p><%= campground.description.substring(0,100) %>...</p>
-                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary btn-sm">View More</a>
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary btn-sm stretched-link">
+                            View More</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +44,7 @@
                     <div class="mb-4 text-left">
                         <header class="mb-2">
                             <h4 class="mb-1"> <%= campground.name %> </h4>
-                            <div class="text-muted"> Posted By ~ <i> <%= campground.author.username %> </i></div>
+                            <div class="text-muted"> Posted By ~ <em><a href="/users/<%= campground.author.id %>/profile"> <%= campground.author.username %></a> </em></div>
                         </header>
                         <div>
                             <p><%- campground.description.substring(0,100) -%>...</p>

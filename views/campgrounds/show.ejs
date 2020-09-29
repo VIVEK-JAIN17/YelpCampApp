@@ -29,15 +29,13 @@
                     <a href="/campgrounds">
                         <h4><%= campground.name%></h4>
                     </a>
-                    <div class="desc py-3">
+                    <div class="desc pt-3">
                         <p class="text-justify"><%= campground.description %></p>
-                        <p>Submitted By <em><%= campground.author.username %></em></p>
-                        <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
-                        <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning btn-sm"> Edit </a>
-                        <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                        <% } %>
+                        <p>Submitted By <em>
+                                <a href="/users/<%= campground.author.id %>/profile">
+                                    <%= campground.author.username %>
+                                </a></em>
+                        </p>
                     </div>
                 </div>
             </div>
