@@ -10,23 +10,32 @@
         <div class="col-md-6">
             <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
                 <div class="form-group">
+                    <label for="name" class="form-label sr-only"></label>
                     <input class="form-control" type="text" name="camp[name]" id="name" value="<%= campground.name %>"
-                        required>
+                        required />
                 </div>
                 <div class="form-group">
+                    <label for="image" class="form-label sr-only"></label>
                     <input class="form-control" type="text" name="camp[image]" id="image"
-                        value="<%= campground.image %>" required>
+                        value="<%= campground.image %>" required />
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="camp[price]" id="price" step="0.01" min="1"
-                        value="<%= campground.price %>" required>
+                    <label for="price" class="form-label sr-only"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">$</div>
+                        </div>
+                        <input class="form-control" type="number" name="camp[price]" id="price" step="0.01" min="1"
+                            value="<%= campground.price/100 %>" required />
+                    </div>
                 </div>
                 <div class="form-group">
+                    <label for="desc" class="form-label sr-only"></label>
                     <textarea class="form-control" type="text" name="camp[description]" id="desc" rows="10"
                         required><%= campground.description %></textarea>
                 </div>
                 <div class="form-group">
-                    <input class="btn btn-primary btn-block" type="submit" value="Edit Campground">
+                    <input class="btn btn-primary form-control" type="submit" value="Edit Campground" />
                 </div>
             </form>
         </div>

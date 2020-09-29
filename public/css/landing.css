@@ -98,3 +98,29 @@ ul.slideshow li.slide {
 .no-cssanimations .slideshow li {
   opacity: 1;
 }
+
+@media all and (max-width: 768px) {
+  .display-3 {
+    font-size: 2.4rem;
+    padding: 0.25rem 0;
+    margin: 0;
+  }
+
+  .btn.btn-success {
+    padding: 0.35rem 0.70rem !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+@media all and (max-width: 568px) {
+  .display-3 {
+    font-size: 1.8rem;
+    padding: 0.25rem 0;
+    margin: 0;
+  }
+
+  .btn.btn-success {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 1rem !important;
+  }
+}
