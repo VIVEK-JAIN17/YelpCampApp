@@ -11,11 +11,12 @@
             <form action="/campgrounds" method="POST">
                 <div class="form-group">
                     <label for="name" class="form-label sr-only"></label>
-                    <input class="form-control" type="text" name="name" id="name" placeholder="Name" required>
+                    <input class="form-control" type="text" name="camp[name]" id="name" placeholder="Name" required />
                 </div>
                 <div class="form-group">
                     <label for="image" class="form-label sr-only"></label>
-                    <input class="form-control" type="text" name="image" id="image" placeholder="Image URL" required>
+                    <input class="form-control" type="text" name="camp[image]" id="image" placeholder="Image URL"
+                        required />
                 </div>
                 <div class="form-group">
                     <div class="input-group">
@@ -23,13 +24,18 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">$</div>
                         </div>
-                        <input class="form-control" type="number" name="price" id="price" value="1.00" step="0.01"
-                            min="1.00" required>
+                        <input class="form-control" type="number" name="camp[price]" id="price" value="1.00" step="0.01"
+                            min="1.00" required />
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="location" class="form-label sr-only"></label>
+                    <input class="form-control" type="text" name="location" id="location" placeholder="Location"
+                        required />
+                </div>
+                <div class="form-group">
                     <label for="desc" class="form-label sr-only"></label>
-                    <textarea class="form-control" type="text" name="desc" id="desc" rows="10"
+                    <textarea class="form-control" type="text" name="camp[description]" id="desc" rows="10"
                         placeholder="Add a small Description" required></textarea>
                 </div>
                 <div class="form-group">

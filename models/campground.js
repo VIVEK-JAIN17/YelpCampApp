@@ -17,6 +17,15 @@ const campgroundSchema = new mongoose.Schema({
         required: true,
         min: 1
     },
+    location: {
+        type: String
+    },
+    lat: {
+        type: Number
+    },
+    lng: {
+        type: Number
+    },
     description: {
         type: String,
         required: true

@@ -2,3 +2,4 @@ node_modules
 .DS_Store
 seed.js
 auth_readme.md
+.env

@@ -3,6 +3,15 @@ const router = express.Router();
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 const auth = require('../middleware');
+const NodeGeocoder = require('node-geocoder');
+
+const options = {
+    provider: 'here',
+    apiKey: process.env.GEOCODER_API_KEY,
+    formatter: null // 'gpx', 'string', ...
+};
+
+const geocoder = NodeGeocoder(options);
 
 // INDEX : Shows all the Items(here, Campgrounds)
 router.get("/", (req, res) => {
@@ -22,26 +31,36 @@ router.get("/new", auth.isLoggedin, (req, res) => {
 
 // CREATE : Actually creates a new item (here, campground)
 router.post("/", auth.isLoggedin, (req, res) => {
-    var name = req.body.name;
-    var image = req.body.image;
-    var price = req.body.price;
-    var desc = req.body.desc;
-    var author = {
+    // var name = req.body.name;
+    // var image = req.body.image;
+    // var price = req.body.price;
+    // var desc = req.body.desc;
+    req.body.camp.author = {
         "id": req.user._id,
         "username": req.user.username
     }
-    var newCampground = { name: name, image: image, price: price, description: desc, author: author }
-    Campground.create(newCampground)
-        .then((camp) => {
-            console.log("Successfully posted a new camp on website !\n", camp);
-            res.redirect("/campgrounds");
+    geocoder.geocode(req.body.location, (err, data) => {
+        if (err || !data.length) {
+            req.flash("error", "Invalid Location !!");
+            console.log(err);
+            return res.redirect('back');
+        }
+        req.body.camp.lat = data[0].latitude;
+        req.body.camp.lng = data[0].longitude;
+        req.body.camp.location = data[0].formattedAddress;
 
-        }).catch((err) => {
-            console.log("An Error Occured while posting !", err);
-            req.flash("error", `Database error : ${err.message}`);
-            res.redirect("/campgrounds");
-        });
+        // var newCampground = { name: name, image: image, price: price, description: desc, author: author }
+        Campground.create(req.body.camp)
+            .then((camp) => {
+                console.log("Successfully posted a new camp on website !\n", camp);
+                res.redirect("/campgrounds");
 
+            }).catch((err) => {
+                console.log("An Error Occured while posting !", err);
+                req.flash("error", `Database error : ${err.message}`);
+                res.redirect("/campgrounds");
+            });
+    });
 });
 
 // SHOW : Shows the details of a particular item (here, campground)
@@ -68,13 +87,26 @@ router.get("/:id/edit", auth.authCamp, (req, res) => {
 
 // UPDATE : Actually Updates a Campground 
 router.put("/:id", auth.authCamp, (req, res) => {
-    Campground.findByIdAndUpdate(req.params.id, req.body.camp)
-        .then((campground) => {
-            console.log("Successfully Updated Campground !!\n", campground);
-            req.flash("success", "updated details of the campground !");
-            res.redirect("/campgrounds/" + req.params.id);
+    geocoder.geocode(req.body.location, (err, data) => {
+        if (err || !data.length) {
+            req.flash("error", "Invalid Location !!");
+            console.log(err);
+            return res.redirect('back');
+        }
+        console.log(req.body);
+        console.log("\n\n", data);
+        req.body.camp.lat = data[0].latitude;
+        req.body.camp.lng = data[0].longitude;
+        req.body.camp.location = data[0].formattedAddress;
 
-        }).catch((err) => { console.log(err); });
+        Campground.findByIdAndUpdate(req.params.id, req.body.camp)
+            .then((campground) => {
+                console.log("Successfully Updated Campground !!\n", campground);
+                req.flash("success", "updated details of the campground !");
+                res.redirect("/campgrounds/" + req.params.id);
+
+            }).catch((err) => { console.log(err); });
+    });
 });
 
 // DELETE : Deletes a Campground
