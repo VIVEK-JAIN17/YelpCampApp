@@ -107,7 +107,7 @@ ul.slideshow li.slide {
   }
 
   .btn.btn-success {
-    padding: 0.35rem 0.70rem !important;
+    padding: 0.35rem 0.7rem !important;
     font-size: 1.2rem !important;
   }
 }
@@ -123,4 +123,9 @@ ul.slideshow li.slide {
     padding: 0.25rem 0.5rem !important;
     font-size: 1rem !important;
   }
+}
+
+/* Flash Messages */
+div.alert {
+  text-transform: uppercase;
 }
