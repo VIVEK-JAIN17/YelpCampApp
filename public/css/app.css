@@ -122,6 +122,11 @@ button.border-none {
   background-color: grey;
 }
 
+.placeholder_images{
+  max-height: 300px;
+  opacity: 0.8;
+}
+
 /* User Dashboard Page */
 .dashboard {
   min-height: 100vh;
@@ -129,6 +134,11 @@ button.border-none {
 
 #vertical-navbar {
   background-color: #f8f9fa;
+}
+
+.img-thumbnail {
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 img.img-dashboard {
@@ -236,7 +246,7 @@ img.img-dashboard {
   position: absolute;
   bottom: 15px;
   left: 50%;
-  transform: translate(-40%, 25%);
+  transform: translate(-50%, 25%);
   font-size: 2rem;
   font-weight: 600;
   text-transform: capitalize;
@@ -247,7 +257,7 @@ img.img-dashboard {
   letter-spacing: 2px;
 }
 
-.blur{
+.blur {
   background-color: #ebf4ffc5;
   border-radius: 5px;
 }

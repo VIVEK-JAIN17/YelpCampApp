@@ -3,10 +3,9 @@
     <div class="row dashboard">
         <div class="col-md-5 col-lg-4 p-4" id="vertical-navbar">
             <div class="img-thumbnail">
-                <img class="img-dashboard " height="" src="<%= user.avatar %>" alt="<%= user.username %>" />
-                <div class="dashboard-name pt-2">
+                <img class="img-dashboard" src="<%= user.avatar %>" alt="<%= user.username %>" />
+                <div class="dashboard-name pt-2 pr-2">
                     <%= user.firstname + " " + user.lastname %>
-                    <button type="submit" class="btn primary effect ml-2"> <span class="fa fa-pencil"></span> </button>
                 </div>
             </div>
             <div class="list-dashboard">
@@ -17,6 +16,9 @@
                     <strong> <%=user.username%>'s campgrounds</strong>
                     <% } %>
                 </div>
+                <% if(campgrounds.length === 0) { %>
+                <img src="/images/placeholder_images/thinking-man.svg" alt="thinking-man" class="img-fluid placeholder_images" />
+                <% } %>
                 <ul>
                     <% campgrounds.forEach(campground => { %>
                     <li>
@@ -42,7 +44,7 @@
         <div class="col-md-7 col-lg-8 p-4">
 
             <div class="dashboard-username"><%= user.username %>'s profile</div>
-            <form class="mt-4">
+            <form class="mt-4" action="/users/<%= user._id %>/edit" method="GET">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="firstname" class="form-label"> Firstname </label>
@@ -80,25 +82,31 @@
                     <div class="form-group col-md-6">
                         <label for="address" class="form-label"> Address </label>
                         <input class="form-control" readonly type="text" name="address" id="address"
-                            value="<%= user.address %>" />
+                            value="<%= user.address.address %>" />
                     </div>
                     <div class="form-group col-md-3">
                         <label for="state" class="form-label"> State </label>
                         <input class="form-control" readonly type="text" name="state" id="state"
-                            value="<%= user.address %>" />
+                            value="<%= user.address.state %>" />
                     </div>
                     <div class="form-group col-md-3">
                         <label for="country" class="form-label"> Country </label>
                         <input class="form-control" readonly type="text" name="country" id="country"
-                            value="<%= user.address %>" />
+                            value="<%= user.address.country %>" />
                     </div>
                 </div>
-                <div class="form-group mt-3">
-                    <input type="submit" class="btn btn-primary btn" value="Edit Profile" />
+                <div class="form-row">
+                    <div class="form-group col-auto">
+                        <input type="submit" class="btn btn-primary btn" value="Edit Details" />
+                    </div>
+                    <div class="form-group col-auto">
+                        <a href="/users/<%= user._id %>/profile" class="btn btn-primary btn"> View Profile </a>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
+</div>
 </div>
 
 <%- include('../partials/footer') -%>
