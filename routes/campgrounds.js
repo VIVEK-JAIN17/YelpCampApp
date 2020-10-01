@@ -8,7 +8,7 @@ const NodeGeocoder = require('node-geocoder');
 const options = {
     provider: 'here',
     apiKey: process.env.GEOCODER_API_KEY,
-    formatter: null // 'gpx', 'string', ...
+    formatter: null
 };
 
 const geocoder = NodeGeocoder(options);
@@ -31,10 +31,6 @@ router.get("/new", auth.isLoggedin, (req, res) => {
 
 // CREATE : Actually creates a new item (here, campground)
 router.post("/", auth.isLoggedin, (req, res) => {
-    // var name = req.body.name;
-    // var image = req.body.image;
-    // var price = req.body.price;
-    // var desc = req.body.desc;
     req.body.camp.author = {
         "id": req.user._id,
         "username": req.user.username
@@ -49,10 +45,8 @@ router.post("/", auth.isLoggedin, (req, res) => {
         req.body.camp.lng = data[0].longitude;
         req.body.camp.location = data[0].formattedAddress;
 
-        // var newCampground = { name: name, image: image, price: price, description: desc, author: author }
         Campground.create(req.body.camp)
             .then((camp) => {
-                console.log("Successfully posted a new camp on website !\n", camp);
                 res.redirect("/campgrounds");
 
             }).catch((err) => {
@@ -70,7 +64,6 @@ router.get("/:id", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            console.log("Found the campground correctly !!");
             res.render("campgrounds/show", { campground: campDetails });
         }
     });
@@ -101,7 +94,6 @@ router.put("/:id", auth.authCamp, (req, res) => {
 
         Campground.findByIdAndUpdate(req.params.id, req.body.camp)
             .then((campground) => {
-                console.log("Successfully Updated Campground !!\n", campground);
                 req.flash("success", "updated details of the campground !");
                 res.redirect("/campgrounds/" + req.params.id);
 
@@ -115,12 +107,10 @@ router.delete("/:id", auth.authCamp, (req, res) => {
         .then((campground) => {
             campground.comments.forEach(comment => {
                 Comment.findByIdAndRemove(comment)
-                    .then(() => { console.log("comment deleted !!"); })
                     .catch((err) => { console.log(err); })
             });
 
         }).then(() => {
-            console.log("Successfully Deleted Campground !");
             req.flash("success", "Successfully Deleted Campground !");
             res.redirect("/campgrounds");
 

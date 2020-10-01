@@ -25,7 +25,6 @@ router.post("/", auth.isLoggedin, (req, res) => {
                     camp.comments.push(comment);
                     camp.save()
                         .then(() => {
-                            console.log("Comment Posted Successfully !");
                             res.redirect("/campgrounds/" + req.params.id);
 
                         }).catch((err) => { console.log("Error while posting comment\n", err) })
@@ -55,7 +54,6 @@ router.get("/:commentId/edit", auth.authComment, (req, res) => {
 router.put("/:commentId", auth.authComment, (req, res) => {
     Comment.findByIdAndUpdate(req.params.commentId, req.body.comment)
         .then((comment) => {
-            console.log("Successfully updated comment");
             req.flash("success", "comment updated !!");
             res.redirect("/campgrounds/" + req.params.id);
         }).catch((err) => { console.log(err); });
@@ -65,7 +63,6 @@ router.put("/:commentId", auth.authComment, (req, res) => {
 router.delete("/:commentId", auth.authComment, (req, res) => {
     Comment.findByIdAndRemove(req.params.commentId)
         .then(() => {
-            console.log("comment deleted succesfully !!");
             req.flash("success", "your comment was deleted !!");
             res.redirect("/campgrounds/" + req.params.id);
 

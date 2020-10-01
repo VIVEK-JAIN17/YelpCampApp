@@ -12,7 +12,6 @@ router.get('/:id/profile', (req, res) => {
                 Campground.find({ 'author.id': req.params.id })
                     .then((campgrounds) => {
                         if (campgrounds != null) {
-                            console.log("Found User ! Rendering Profile !!");
                             res.render("users/show", { user: user, campgrounds: campgrounds });
                         } else {
                             req.flash("error", "Something Went Wrong !!");
