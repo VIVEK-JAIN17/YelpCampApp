@@ -25,6 +25,24 @@ router.get('/:id/profile', (req, res) => {
         }).catch((err) => { console.log(err); });
 });
 
+router.get('/:id/edit', auth.verifyUser, (req, res) => {
+    res.render("users/edit", { user: req.user });
+});
+
+router.put("/:id/profile", auth.verifyUser, (req, res) => {
+    var address = {
+        address: req.body.address,
+        state: req.body.state,
+        country: req.body.country
+    }
+    req.body.user.address = address;
+    User.findByIdAndUpdate(req.user._id, req.body.user)
+        .then((user) => {
+            req.flash("success", "Updated User Credentials !!");
+            res.redirect(`/users/${req.params.id}/dashboard`);
+        }).catch((err) => { console.log(err); });
+});
+
 router.get('/:id/dashboard', auth.verifyUser, (req, res) => {
     User.findById(req.user._id)
         .then((user) => {
