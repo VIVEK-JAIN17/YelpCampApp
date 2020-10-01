@@ -14,9 +14,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    gender: {
+        type: String
+    },
+    dob: {
+        type: String
+    },
     avatar: {
         type: String,
-        default: "https://www.easemytrip.com/travel/img/ladakh-camping.jpg"
+        default: '/images/avatars/default_avatar.png'
+    },
+    address: {
+        address: { type: String },
+        state: { type: String },
+        country: { type: String },
     },
     isAdmin: {
         type: Boolean,

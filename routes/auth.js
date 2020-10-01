@@ -18,7 +18,14 @@ router.route("/register")
                 username: req.body.username,
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
-                email: req.body.email
+                gender: req.body.gender,
+                dob: req.body.dob,
+                email: req.body.email,
+                address: {
+                    address: req.body.address,
+                    state: req.body.state,
+                    country: req.body.country
+                }
             });
             User.register(newUser, req.body.password, (err, user) => {
                 if (err) {
