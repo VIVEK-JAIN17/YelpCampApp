@@ -116,13 +116,13 @@ button.border-none {
 }
 
 /* map */
-#map {
+#myMap {
   width: 100%;
   height: 400px;
-  background-color: grey;
+  background-color: rgba(184, 184, 184, 0.705);
 }
 
-.placeholder_images{
+.placeholder_images {
   max-height: 300px;
   opacity: 0.8;
 }

@@ -6,7 +6,7 @@ const auth = require('../middleware');
 const NodeGeocoder = require('node-geocoder');
 
 const options = {
-    provider: 'here',
+    provider: 'opencage',
     apiKey: process.env.GEOCODER_API_KEY,
     formatter: null
 };
@@ -44,7 +44,6 @@ router.post("/", auth.isLoggedin, (req, res) => {
         req.body.camp.lat = data[0].latitude;
         req.body.camp.lng = data[0].longitude;
         req.body.camp.location = data[0].formattedAddress;
-
         Campground.create(req.body.camp)
             .then((camp) => {
                 res.redirect("/campgrounds");
@@ -86,12 +85,9 @@ router.put("/:id", auth.authCamp, (req, res) => {
             console.log(err);
             return res.redirect('back');
         }
-        console.log(req.body);
-        console.log("\n\n", data);
         req.body.camp.lat = data[0].latitude;
         req.body.camp.lng = data[0].longitude;
-        req.body.camp.location = data[0].formattedAddress;
-
+        req.body.camp.location = req.body.location + ', ' + data[0].state + ', ' + data[0].country;
         Campground.findByIdAndUpdate(req.params.id, req.body.camp)
             .then((campground) => {
                 req.flash("success", "updated details of the campground !");
