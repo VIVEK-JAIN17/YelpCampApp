@@ -15,13 +15,25 @@ const geocoder = NodeGeocoder(options);
 
 // INDEX : Shows all the Items(here, Campgrounds)
 router.get("/", (req, res) => {
-    Campground.find({})
-        .then((campgrounds) => {
-            res.render("campgrounds/index", { campgrounds: campgrounds });
+    if (req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Campground.find({ name: regex })
+            .then((campgrounds) => {
+                if (campgrounds.length < 1) {
+                    req.flash("info", "not found anything relating to your search !");
+                    return res.redirect("/");
+                }
+                res.render("campgrounds/index", { campgrounds: campgrounds });
 
-        }).catch((err) => console.log(err));
+            }).catch((err) => console.log(err));
+    } else {
+        Campground.find({})
+            .then((campgrounds) => {
+                res.render("campgrounds/index", { campgrounds: campgrounds });
 
-})
+            }).catch((err) => console.log(err));
+    }
+});
 
 // NEW : Shows a form to create a new item (here, campground)
 router.get("/new", auth.isLoggedin, (req, res) => {
@@ -112,5 +124,9 @@ router.delete("/:id", auth.authCamp, (req, res) => {
 
         }).catch((err) => { console.log(err); });
 });
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
