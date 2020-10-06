@@ -126,6 +126,11 @@ header.header .title {
   transform: scale(1.4, 1.4);
 }
 
+.fa-star-o,
+.fa-star {
+  color: gold;
+}
+
 /* Flash Messages */
 div.alert {
   text-transform: uppercase;

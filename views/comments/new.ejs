@@ -3,8 +3,6 @@
     <div class="container text-center">
         <h1 class="display-3">Add New Comment to <%= campground.name %></h1>
         <a class="btn btn-primary btn-lg mt-4" href="/campgrounds/<%= campground._id %>">Go back</a>
-        <!-- <p class="lead pt-4">View our hand-picked camp sites from all over the world!</p>
-        <a class="btn btn-primary btn-lg mt-3" href="/campgrounds/new">Add new Campground</a> -->
     </div>
 </header>
 <div class="container">
@@ -12,7 +10,17 @@
         <div class="col-md-8 col-lg-6">
             <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
                 <div class="form-group">
-                    <label for="comment[comment]" class="form-label">Add a Comment</label>
+                    <label for="rating" class="form-label">Rating</label>
+                    <select class="form-control" name="comment[rating]" id="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment" class="form-label">Add a Comment</label>
                     <textarea class="form-control" type="text" name="comment[comment]" id="comment" rows="5"
                         placeholder="Add comment" required></textarea>
                 </div>

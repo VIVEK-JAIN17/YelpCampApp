@@ -66,8 +66,18 @@
                     <% } %>
                     <%campground.comments.forEach(comment => { %>
                     <li class="mb-3">
-                        <small class="float-right"><%= comment.createdAt.toDateString() %></small>
-                        <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
+                        <div>
+                            <small class="float-right"><%= comment.createdAt.toDateString() %></small>
+                            <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
+                            <span>
+                                <% for(var i = 0; i < comment.rating; i++) {  %>
+                                <i class="fa fa-star"></i>
+                                <% } %>
+                                <% for(var i = comment.rating; i < 5; i++) {  %>
+                                <i class="fa fa-star-o"></i>
+                                <% } %>
+                            </span>
+                        </div>
                         <div>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
                             <small class="float-right">
