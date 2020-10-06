@@ -44,7 +44,9 @@
                     <div class="mb-4 text-left">
                         <header class="mb-2">
                             <h4 class="mb-1"> <%= campground.name %> </h4>
-                            <div class="text-muted"> Posted By ~ <em><a href="/users/<%= campground.author.id %>/profile"> <%= campground.author.username %></a> </em></div>
+                            <div class="text-muted"> Posted By ~ <em><a
+                                        href="/users/<%= campground.author.id %>/profile">
+                                        <%= campground.author.username %></a> </em></div>
                         </header>
                         <div>
                             <p><%- campground.description.substring(0,100) -%>...</p>

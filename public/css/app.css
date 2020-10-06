@@ -20,6 +20,27 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+#ROW,
+.form-inline {
+  width: 100%;
+}
+
+.search-bar > .form-control {
+  background-color: transparent;
+  color: #f8f9fa;
+}
+
+.search-bar > .form-control:focus {
+  outline: none;
+  border-color: #f8f9fa;
+  box-shadow: none;
+}
+
+.btn-outline-light:hover {
+  color: #f8f9fa;
+  background: transparent;
+}
+
 /* INDEX */
 ul.list-unstyled.index > li {
   padding: 1rem 1.25rem;
