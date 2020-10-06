@@ -22,8 +22,14 @@ router.get("/", (req, res) => {
                 if (campgrounds.length < 1) {
                     req.flash("info", "not found anything relating to your search !");
                     return res.redirect("/");
+                } else if (campgrounds.length === 1) {
+                    Campground.findById(campgrounds[0]._id).populate("comments")
+                        .then((campDetails) => {
+                            res.render("campgrounds/show", { campground: campDetails });
+                        }).catch((err) => { console.log(err) });
+                } else {
+                    res.render("campgrounds/index", { campgrounds: campgrounds });
                 }
-                res.render("campgrounds/index", { campgrounds: campgrounds });
 
             }).catch((err) => console.log(err));
     } else {
