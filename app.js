@@ -8,6 +8,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
+const moment = require('moment');
 
 // Passport  
 const passport = require('passport');
@@ -51,6 +52,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
     res.locals.info = req.flash("info");
+    res.locals.moment = moment;
     next();
 });
 

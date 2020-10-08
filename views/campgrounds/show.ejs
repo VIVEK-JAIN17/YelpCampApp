@@ -36,6 +36,7 @@
                                 <a href="/users/<%= campground.author.id %>/profile">
                                     <%= campground.author.username %>
                                 </a></em>
+                            <%= moment(campground.createdAt).fromNow() %>
                         </p>
                         <div class="float-right">
                             <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
@@ -67,7 +68,7 @@
                     <%campground.comments.forEach(comment => { %>
                     <li class="mb-3">
                         <div>
-                            <small class="float-right"><%= comment.createdAt.toDateString() %></small>
+                            <small class="float-right"><%= moment(comment.createdAt).fromNow() %></small>
                             <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
                             <span>
                                 <% for(var i = 0; i < comment.rating; i++) {  %>
