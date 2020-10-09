@@ -9,8 +9,13 @@ const campgroundSchema = new mongoose.Schema({
         required: true
     },
     image: {
-        type: String,
-        required: true
+        id: {
+            type: String
+        },
+        url: {
+            type: String,
+            required: true
+        }
     },
     price: {
         type: Currency,
@@ -18,7 +23,9 @@ const campgroundSchema = new mongoose.Schema({
         min: 1
     },
     location: {
-        type: String
+        place: { type: String },
+        state: { type: String },
+        country: { type: String }
     },
     lat: {
         type: Number

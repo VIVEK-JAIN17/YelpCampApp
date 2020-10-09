@@ -30,7 +30,7 @@
             <ul class="list-unstyled">
                 <% campgrounds.forEach(campground => { %>
                 <li class="media">
-                    <img class="img-fluid align-self-center rounded" src="<%= campground.image %>" width="250"
+                    <img class="img-fluid align-self-center rounded" src="<%= campground.image.url %>" width="250"
                         alt="<%= campground.name %>">
                     <div class="media-body">
                         <div class="media-header">
@@ -39,7 +39,8 @@
                         <div>
                             <div class="px-0 mx-0 pb-3"><%= campground.description.substring(0,100) %>...</div>
                             <span><a href="/campgrounds/<%= campground._id%>"
-                                    class="btn btn-primary btn-sm py-1 px-2">View</a></span>
+                                    class="btn btn-primary btn-sm py-1 px-2">View</a>
+                            </span>
                             <span class="float-right">
                                 <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
                                 <a href="/campgrounds/<%= campground._id %>/edit"
@@ -65,7 +66,7 @@
                 <% campgrounds.forEach(campground => { %>
                 <li class="stack">
                     <div class="px-3">
-                        <img class="img-fluid align-self-center" src="<%= campground.image %>"
+                        <img class="img-fluid align-self-center" src="<%= campground.image.url %>"
                             alt="<%= campground.name %>">
                         <div class="stack-body">
                             <div class="stack-header pt-3">

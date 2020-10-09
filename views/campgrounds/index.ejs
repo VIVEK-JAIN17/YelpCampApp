@@ -17,7 +17,7 @@
         <div class="col-md-6 col-lg-4 my-3">
             <div class="card">
                 <div class="card-img">
-                    <img class="img-fluid" src="<%= campground.image %>" alt="<%= campground.name%>">
+                    <img class="img-fluid" src="<%= campground.image.url %>" alt="<%= campground.name%>">
                 </div>
                 <div class="card-body">
                     <div class="card-title">
@@ -39,7 +39,7 @@
                 <% campgrounds.forEach(function(campground){ %>
                 <li>
                     <div class="text-center align-self-center">
-                        <img class="img-fluid pb-3" src="<%= campground.image %>" alt="<%= campground.name%>">
+                        <img class="img-fluid pb-3" src="<%= campground.image.url %>" alt="<%= campground.name%>">
                     </div>
                     <div class="mb-4 text-left">
                         <header class="mb-2">
