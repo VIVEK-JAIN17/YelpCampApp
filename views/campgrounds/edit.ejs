@@ -5,34 +5,50 @@
         <a class="btn btn-primary btn-lg mt-4" href="/campgrounds/<%= campground._id %>">Go back</a>
     </div>
 </header>
-<div class="container text-center">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+            <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name" class="form-label sr-only"></label>
+                    <label for="name" class="form-label sr-only">Name</label>
                     <input class="form-control" type="text" name="camp[name]" id="name" value="<%= campground.name %>"
                         required />
                 </div>
                 <div class="form-group">
-                    <label for="image" class="form-label sr-only"></label>
-                    <input class="form-control" type="text" name="camp[image]" id="image"
-                        value="<%= campground.image %>" required />
+                    <div class="form-row">
+                        <div class="input-group col-5">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"> <i class="fa fa-image"></i> </div>
+                            </div>
+                            <label for="image" class="col-form-label form-control" aria-readonly="true" readonly>
+                                Choose An Image</label>
+                        </div>
+                        <input class="align-self-center col-7" type="file" name="image" id="image" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="price" class="form-label sr-only"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">$</div>
+                            <div class="input-group-text"><i class="fa fa-dollar"></i></div>
                         </div>
                         <input class="form-control" type="number" name="camp[price]" id="price" step="0.01" min="1"
                             value="<%= campground.price/100 %>" required />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="location" class="form-label sr-only"></label>
-                    <input class="form-control" type="text" name="location" id="location"
-                        value="<%= campground.location %>" required />
+                    <div class="form-row">
+                        <label for="location" class="col-form-label sr-only"></label>
+                        <div class="input-group col-8">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fa fa-map-marker"></i></div>
+                            </div>
+                            <input class="form-control" type="text" name="location" id="location"
+                                value="<%= campground.location.place %>" required />
+                        </div>
+                        <input class="form-control col-4" type="text" name="state" id="state"
+                            value="<%= campground.location.state %>" required />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="desc" class="form-label sr-only"></label>
