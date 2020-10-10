@@ -99,9 +99,11 @@ router.post("/", auth.isLoggedin, upload.single('image'), (req, res) => {
             var answer;
             var found = false;
             data.forEach(result => {
-                if (compareTo(result.state, req.body.state)) {
+                if(!result.state) return;
+                if (compareTo(result.state.toLowerCase(), req.body.state.toLowerCase())) {
                     answer = result;
                     found = true;
+                    return;
                 }
             });
             if (!found) {
@@ -162,9 +164,11 @@ router.put("/:id", auth.authCamp, upload.single('image'), (req, res) => {
             var answer;
             var found = false;
             data.forEach(result => {
-                if (compareTo(result.state, req.body.state)) {
+                if(!result.state) return;
+                if (compareTo(result.state.toLowerCase(), req.body.state.toLowerCase())) {
                     answer = result;
                     found = true;
+                    return;
                 }
             });
             if (!found) {
@@ -236,8 +240,6 @@ function escapeRegex(text) {
 
 function compareTo(str1, str2) {
     let i = 0, j = 0;
-    str1 = str1.toLowerCase();
-    str2 = str2.toLowerCase();
     while (i < str1.length && j < str2.length) {
         if (str1[i] !== str2[j]) {
             return false;
