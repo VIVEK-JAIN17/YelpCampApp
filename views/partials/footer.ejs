@@ -9,6 +9,18 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </footer>
+<script>
+    var $navbar = $('.navbar');
+    console.log($navbar);
+    window = $(window);
+    console.log(window);
+    $(window).scroll(() => {
+        // $navbar.css({
+        //     'box-shadow': '0 5px 10px rgba(0, 0, 0, 0.25), 0 5px 10px rgba(0, 0, 0, 0.35)'
+        // })
+        $navbar.toggleClass("scrolled", $(this).scrollTop() > $navbar.height());
+    })
+</script>
 </body>
 
 </html>
