@@ -3,7 +3,7 @@
     <div class="container text-center">
         <h1 class="display-3">Welcome to Yelp Camp!</h1>
         <p class="lead pt-4">View our hand-picked camp sites from all over the world!</p>
-        <a class="btn btn-primary btn-lg mt-3" href="/campgrounds/new">Add new Campground</a>
+        <a class="btn btn-light btn-lg mt-3" href="/campgrounds/new">Add new Campground</a>
     </div>
 </header>
 <div class="container-md text-center">
@@ -15,7 +15,7 @@
     <div class="row justify-content-around d-none d-md-flex">
         <% campgrounds.forEach(function(campground){ %>
         <div class="col-md-6 col-lg-4 my-3">
-            <div class="card">
+            <div class="card card-index">
                 <div class="card-img">
                     <img class="img-fluid" src="<%= campground.image.url %>" alt="<%= campground.name%>">
                 </div>

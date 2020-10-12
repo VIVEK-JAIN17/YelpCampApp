@@ -3,7 +3,7 @@
     <div class="container text-center">
         <h1 class="display-3">Welcome to Yelp Camp!</h1>
         <p class="lead pt-4">View our hand-picked camp sites from all over the world!</p>
-        <a class="btn btn-primary btn-lg mt-3" href="/campgrounds">Campgrounds</a>
+        <a class="btn btn-light btn-lg mt-3" href="/campgrounds">Campgrounds</a>
     </div>
 </header>
 
@@ -11,11 +11,47 @@
     <div class="row justify-content-center">
         <div class="col-sm-10 col-md-4 col-lg-3 mb-4 d-lg-block">
             <p class="lead">YelpCamp</p>
-            <ul class="list-group mb-4">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 3</li>
-            </ul>
+            <div class="accordion mb-3" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                Location
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-1"> <i class="fa fa-map-marker"></i></div>
+                                <div class="col-10">
+                                    <%= campground.location.place %>, <%= campground.location.state %>,
+                                    <%= campground.location.country %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                                Amenities
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            tent, campfires, food, water, sleeping bag(must carry your own)
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- MAP -->
             <div id="myMap"></div>
         </div>
@@ -27,9 +63,7 @@
                     <span>
                         <h6 class="title float-right">$ <%= campground.price.toFixed(2)/100 %>/night</h6>
                     </span>
-                    <a href="/campgrounds">
-                        <h4><%= campground.name%></h4>
-                    </a>
+                    <h4 class="text-primary"><%= campground.name%></h4>
                     <div class="desc pt-3">
                         <p class="text-justify"><%= campground.description %></p>
                         <p class="d-inline-block mb-0">Submitted By <em>

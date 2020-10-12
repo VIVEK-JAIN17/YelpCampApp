@@ -6,9 +6,9 @@ However, there are some features of this applicaiton :-
 
 - Used Bootstrap for CSS
 - Front End developed using EJS Templating
-- Used [Express JS](https://www.expressjs.org) and [Node JS](https://https://www.nodejs.org) for Backend
-- Used MongoDB and [Mongoose](https://www.mongoosejs.com) for Database Operations
-- Used [PassportJS](https://www.passportjs.com) for User Authentication
+- Used [Express JS](https://expressjs.com/) and [Node JS](https://nodejs.org/en/docs/) for Backend
+- Used MongoDB and [Mongoose](https://mongoosejs.com/docs/guide.html) for Database Operations
+- Used [PassportJS](http://www.passportjs.org/) for User Authentication
 - Used MongoDB Atlas to host Cloud Database
 - Used [Heroku](https://www.heroku.com) CLI to host the entire project on Web
 - Used Bing Maps API for rendering of Map

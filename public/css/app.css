@@ -1,13 +1,19 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
-  background-color: rgb(243, 243, 243);
+  background-color: #fcfcfc;
+  margin: 0 0 50px !important;
 }
 
 .jumbotron {
   padding: 4rem 0;
   margin-bottom: 2rem;
   margin-top: 50px;
-  color: #000;
-  background-image: url('https://wallpaperaccess.com/full/959295.jpg');
+  color: rgb(12, 0, 0);
+  background-image: url("https://wallpaperaccess.com/full/959295.jpg");
   background-size: cover;
   background-position: cover;
 }
@@ -73,7 +79,7 @@ body {
 }
 
 /* INDEX */
-.card:hover {
+.card-index:hover {
   box-shadow: -8px 8px 12px rgba(150, 150, 150, 0.15),
     8px -8px 12px rgba(150, 150, 150, 0.15),
     8px -8px 12px rgba(150, 150, 150, 0.75);
@@ -103,6 +109,15 @@ header.header .title {
   font-size: 3.5rem;
   font-weight: 300;
   line-height: 1.2;
+}
+
+.accordion .card {
+  text-transform: capitalize;
+}
+
+.accordion .card > .card-header button {
+  /* color: #dee2e6 !important; */
+  color: black;
 }
 
 @media all and (max-width: 768px) {
@@ -171,7 +186,14 @@ header.header .title {
 }
 
 /* Flash Messages */
+.alert-wrapper {
+  position: relative;
+}
+
 div.alert {
+  position: absolute;
+  top: 10px;
+  width: 100%;
   text-transform: uppercase;
 }
 
@@ -347,4 +369,29 @@ li.stack:last-child {
 
 div.media-body {
   padding: 0 20px;
+}
+
+/* ********* Footer ********** */
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.37) !important;
+}
+
+.footer .row {
+  color: #000000;
+  height: 50px;
+}
+
+.footer a {
+  color: #0071a5;
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+
+.footer a:hover {
+  text-decoration: none;
 }
