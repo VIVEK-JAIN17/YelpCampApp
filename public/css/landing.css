@@ -32,6 +32,12 @@ body {
   color: #fff;
 }
 
+#link > h1 {
+  font-weight: 600;
+  text-shadow: -5px 5px 5px rgba(0, 0, 0, 0.35),
+    -7px 7px 7px rgba(0, 0, 0, 0.55), -9px 9px 9px rgba(0, 0, 0, 0.75);
+}
+
 ul.slideshow {
   position: fixed;
   width: 100%;
