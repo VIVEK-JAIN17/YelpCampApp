@@ -198,6 +198,7 @@ div.alert {
   top: 10px;
   width: 100%;
   text-transform: uppercase;
+  z-index: 1000;
 }
 
 /* delete button */
