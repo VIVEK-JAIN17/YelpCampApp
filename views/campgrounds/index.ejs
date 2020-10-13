@@ -36,11 +36,13 @@
     </div>
     <div class="row justify-content-center d-flex d-md-none">
         <div class="my-4 mx-3 mx-sm-5 px-sm-3">
-            <ul class="list-unstyled index">
+            <ul class="list-unstyled index blur">
                 <% campgrounds.forEach(function(campground){ %>
                 <li>
                     <div class="text-center align-self-center">
-                        <img class="img-fluid pb-3" src="<%= campground.image.url %>" alt="<%= campground.name%>">
+                        <a href="/campgrounds/<%= campground._id %>">
+                            <img class="img-fluid pb-3" src="<%= campground.image.url %>" alt="<%= campground.name%>">
+                        </a>
                     </div>
                     <div class="mb-4 text-left">
                         <header class="mb-2">

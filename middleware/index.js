@@ -1,4 +1,3 @@
-const express = require('express');
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 
@@ -50,7 +49,7 @@ exports.verifyUser = (req, res, next) => {
             return next();
         } else {
             req.flash("error", "You do not have permission to do that !");
-            res.redirect('back');
+            res.redirect("back");
         }
     } else {
         req.flash("error", "you are not logged in !!");

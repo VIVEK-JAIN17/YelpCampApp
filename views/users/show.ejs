@@ -2,7 +2,7 @@
 
 <div class="container-fluid p-0 m-0" id="profile-container">
     <div class="profile">
-        <img class="cover" src="http://via.placeholder.com/900" alt="<%= user.username %>" />
+        <img class="cover" src="/images/placeholder_images/cover.jpg" alt="<%= user.username %>" />
         <div class="profile-circle">
             <img class="img-fluid avatar" src="<%= user.avatar %>" alt="<%= user.username %>" />
         </div>
@@ -66,8 +66,10 @@
                 <% campgrounds.forEach(campground => { %>
                 <li class="stack">
                     <div class="px-3">
-                        <img class="img-fluid align-self-center" src="<%= campground.image.url %>"
-                            alt="<%= campground.name %>">
+                        <a href="/campgrounds/<%= campground._id %>">
+                            <img class="img-fluid align-self-center" src="<%= campground.image.url %>"
+                                alt="<%= campground.name %>" />
+                        </a>
                         <div class="stack-body">
                             <div class="stack-header pt-3">
                                 <h4><a href="/campgrounds/<%= campground._id%>"> <%= campground.name%></a></h4>
