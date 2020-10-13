@@ -71,63 +71,67 @@ router.get("/", (req, res) => {
 // NEW : Shows a form to create a new item (here, campground)
 router.get("/new", auth.isLoggedin, (req, res) => {
     res.render("campgrounds/new");
-
 });
 
 // CREATE : Actually creates a new item (here, campground)
-router.post("/", auth.isLoggedin, upload.single('image'), (req, res) => {
-    cloudinary.uploader.upload(req.file.path, (err, result) => {
-        if (err) {
-            console.log(err);
-            req.flash("error", `an error occured while uploading: ${err.message}`);
-            return res.redirect('back');
-        }
-        req.body.camp.image = {
-            id: result.public_id,
-            url: result.secure_url
-        }
+router.post("/", auth.isLoggedin, upload.single('image'), async (req, res) => {
+    var data = await geocoder.geocode(req.body.location);
+    try {
+        // setting user details
         req.body.camp.author = {
             "id": req.user._id,
             "username": req.user.username
         }
-        geocoder.geocode(req.body.location, (err, data) => {
-            if (err) {
-                req.flash("error", "Invalid Location !!");
-                console.log(err);
-                return res.redirect('back');
+        var answer;
+        var found = false;
+        data.forEach(result => {
+            if (!result.state) return;
+            if (compareTo(result.state.toLowerCase(), req.body.state.toLowerCase())) {
+                answer = result;
+                found = true;
+                return;
             }
-            var answer;
-            var found = false;
-            data.forEach(result => {
-                if(!result.state) return;
-                if (compareTo(result.state.toLowerCase(), req.body.state.toLowerCase())) {
-                    answer = result;
-                    found = true;
-                    return;
-                }
-            });
-            if (!found) {
-                req.flash("error", "sorry! couldn't find any such place !");
-                return res.redirect('back');
-            }
-            req.body.camp.lat = answer.latitude;
-            req.body.camp.lng = answer.longitude;
-            req.body.camp.location = {
-                place: req.body.location,
-                state: answer.state,
-                country: answer.country
-            }
-            Campground.create(req.body.camp)
-                .then((camp) => {
-                    res.redirect("/campgrounds");
-
-                }).catch((err) => {
-                    console.log("An Error Occured while posting !", err);
-                    req.flash("error", `Database error : ${err.message}`);
-                    res.redirect("/campgrounds");
-                });
         });
-    });
+        if (!found) {
+            req.flash("error", "sorry! couldn't find any such place !");
+            return res.redirect("back");
+        }
+        // setting location details
+        req.body.camp.lat = answer.latitude;
+        req.body.camp.lng = answer.longitude;
+        req.body.camp.location = {
+            place: req.body.location,
+            state: answer.state,
+            country: answer.country
+        }
+    } catch (err) {
+        req.flash("error", "Invalid Location !!");
+        console.log(err);
+        return res.redirect("back");
+    }
+
+    var result = await cloudinary.uploader.upload(req.file.path)
+    try {
+        // setting image details
+        req.body.camp.image = {
+            id: result.public_id,
+            url: result.secure_url
+        }
+        // creating the campground
+        Campground.create(req.body.camp)
+            .then((camp) => {
+                res.redirect("/campgrounds");
+
+            }).catch((err) => {
+                console.log("An Error Occured while posting !", err);
+                req.flash("error", `Database error : ${err.message}`);
+                res.redirect("/campgrounds");
+            });
+    } catch (err) {
+        console.log(err);
+        req.flash("error", `an error occured while uploading: ${err.message}`);
+        return res.redirect('back');
+    }
 });
 
 // SHOW : Shows the details of a particular item (here, campground)
@@ -160,27 +164,29 @@ router.put("/:id", auth.authCamp, upload.single('image'), (req, res) => {
             return res.redirect('back');
         }
         try {
-            var data = await geocoder.geocode(req.body.location);
-            var answer;
-            var found = false;
-            data.forEach(result => {
-                if(!result.state) return;
-                if (compareTo(result.state.toLowerCase(), req.body.state.toLowerCase())) {
-                    answer = result;
-                    found = true;
-                    return;
+            if (!compareTo(campground.location.place.toLowerCase(), req.body.location.toLowerCase())) {
+                var data = await geocoder.geocode(req.body.location);
+                var answer;
+                var found = false;
+                data.forEach(result => {
+                    if (!result.state) return;
+                    if (compareTo(result.state.toLowerCase(), req.body.state.toLowerCase())) {
+                        answer = result;
+                        found = true;
+                        return;
+                    }
+                });
+                if (!found) {
+                    req.flash("error", "sorry! couldn't find any such place !");
+                    return res.redirect('back');
                 }
-            });
-            if (!found) {
-                req.flash("error", "sorry! couldn't find any such place !");
-                return res.redirect('back');
-            }
-            campground.lat = answer.latitude;
-            campground.lng = answer.longitude;
-            campground.location = {
-                place: req.body.location,
-                state: answer.state,
-                country: answer.country
+                campground.lat = answer.latitude;
+                campground.lng = answer.longitude;
+                campground.location = {
+                    place: req.body.location,
+                    state: answer.state,
+                    country: answer.country
+                }
             }
             if (req.file) {
                 try {
@@ -225,11 +231,11 @@ router.delete("/:id", auth.authCamp, (req, res) => {
                 if (err) {
                     console.log(err);
                     req.flash("error", `something went wrong ! ${err.message} !!`);
-                    return res.redirect('back');
+                    return res.redirect('/campgrounds');
                 }
                 campground.remove();
                 req.flash("success", "Successfully Deleted Campground !");
-                res.redirect('back');
+                res.redirect('/campgrounds');
             });
         }).catch((err) => { console.log(err); });
 });
