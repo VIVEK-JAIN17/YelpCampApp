@@ -10,12 +10,13 @@ body {
 #navbar .nav-item .nav-link,
 #navbar .navbar-brand {
   color: #fff;
+  text-transform: capitalize;
 }
 
 .navbar .nav-item .nav-link:hover {
   color: #fff;
-  transform: translate(0, -5px);
-  transition: all 100ms linear;
+  transform: scale(1.1, 1.1);
+  transition: all 150ms linear;
 }
 
 .btn-outline-success {
@@ -117,6 +118,10 @@ ul.slideshow li.slide {
     border-bottom: 1px solid #76808a34;
   }
 
+  .navbar .nav-item:last-child .nav-link {
+    border-bottom: none;
+  }
+
   .navbar .nav-item .nav-link:hover {
     transform: none;
   }
@@ -157,4 +162,10 @@ div.alert {
   width: 100%;
   text-transform: uppercase;
   z-index: 1000;
+}
+
+@media all and (min-width: 768px) {
+  .navbar .nav-item .nav-link {
+    border-bottom: none;
+  }
 }

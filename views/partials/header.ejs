@@ -2,13 +2,20 @@
 <html lang="en">
 
 <head>
+    <!-- meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- title -->
     <title>Yelp Camp</title>
+    <!-- stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
     <!-- Bing Maps API -->
     <script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario" async
         defer></script>
@@ -22,7 +29,9 @@
                     class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-header">
-                <a href="/" class="navbar-brand">YelpCamp</a>
+                <a href="/" class="navbar-brand">
+                    <img src="/images/placeholder_images/logo.png" width="130" height="30" loading="lazy" alt="logo">
+                </a>
             </div>
             <form action="/campgrounds" class="form text-center search d-none d-md-block" method="GET">
                 <div class="form-group mx-auto my-0">
