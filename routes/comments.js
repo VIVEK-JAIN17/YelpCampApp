@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router({ mergeParams: true });
-const Campground = require('../models/campground');
-const Comment = require('../models/comment');
-const auth = require('../middleware');
+const Campground = require("../models/campground");
+const Comment = require("../models/comment");
+const auth = require("../middleware");
 
 // COMMENTS GET (RENDERS NEW COMMENT FORM)
 router.get("/new", auth.isLoggedin, (req, res) => {

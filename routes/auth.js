@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const User = require('../models/user');
-const auth = require('../middleware');
+const passport = require("passport");
+const User = require("../models/user");
+const auth = require("../middleware");
 
 router.route("/register")
     .get((req, res) => {
@@ -32,7 +32,7 @@ router.route("/register")
                     req.flash("error", `error: ${err.message}`);
                     return res.redirect("/register");
                 }
-                passport.authenticate('local')(req, res, () => {
+                passport.authenticate("local")(req, res, () => {
                     req.flash("success", `user registered successfully !! Welcome ${req.body.username} !`);
                     res.redirect("/campgrounds");
 
@@ -53,7 +53,7 @@ router.route("/login")
         }
         res.render("login");
 
-    }).post(passport.authenticate('local', {
+    }).post(passport.authenticate("local", {
         failureRedirect: "/login",
         failureFlash: true,
 
@@ -66,7 +66,7 @@ router.route("/login")
 router.get("/logout", auth.isLoggedin, (req, res) => {
     console.log("logging out user ... " + req.session.passport.user);
     req.session.destroy();
-    res.clearCookie('session-id');
+    res.clearCookie("session-id");
     console.log("logged out sccessfully");
     res.redirect("/");
 });

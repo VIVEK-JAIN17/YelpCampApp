@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 
 const imageFileFilter = (req, file, cb) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
-        return cb(new Error('You can upload only image files!'), false);
+        return cb(new Error("You can upload only image files!"), false);
     }
     cb(null, true);
 };
@@ -35,7 +35,7 @@ const upload = multer({ storage: storage, fileFilter: imageFileFilter });
 // ********** Cloudinary **********
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
-    cloud_name: 'imagecloud-vj-172000',
+    cloud_name: "imagecloud-vj-172000",
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
@@ -136,7 +136,6 @@ router.post("/", auth.isLoggedin, upload.single('image'), async (req, res) => {
 
 // SHOW : Shows the details of a particular item (here, campground)
 router.get("/:id", (req, res) => {
-    // couldn't figure out how to use promises here!
     Campground.findById(req.params.id).populate("comments").exec((err, campDetails) => {
         if (err) {
             console.log(err);
@@ -231,11 +230,11 @@ router.delete("/:id", auth.authCamp, (req, res) => {
                 if (err) {
                     console.log(err);
                     req.flash("error", `something went wrong ! ${err.message} !!`);
-                    return res.redirect('/campgrounds');
+                    return res.redirect("/campgrounds");
                 }
                 campground.remove();
                 req.flash("success", "Successfully Deleted Campground !");
-                res.redirect('/campgrounds');
+                res.redirect("/campgrounds");
             });
         }).catch((err) => { console.log(err); });
 });

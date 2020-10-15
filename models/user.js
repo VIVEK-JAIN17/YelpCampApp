@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-    passportLocalMongoose = require('passport-local-mongoose');
+const mongoose = require("mongoose"),
+    passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new mongoose.Schema({
     firstname: {
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: '/images/avatars/default_avatar.png'
+        default: "/images/avatars/default_avatar.png"
     },
     address: {
         address: { type: String },

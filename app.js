@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 // Express
 const express = require("express");
@@ -6,35 +6,35 @@ const app = express();
 
 // Other
 const bodyParser = require("body-parser");
-const methodOverride = require('method-override');
-const flash = require('connect-flash');
-const moment = require('moment');
+const methodOverride = require("method-override");
+const flash = require("connect-flash");
+const moment = require("moment");
 
 // Passport  
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('./models/user');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const User = require("./models/user");
 
 // Routes
-const authRouter = require('./routes/auth');
-const campRouter = require('./routes/campgrounds');
-const commentRouter = require('./routes/comments');
-const userRouter = require('./routes/users');
+const authRouter = require("./routes/auth");
+const campRouter = require("./routes/campgrounds");
+const commentRouter = require("./routes/comments");
+const userRouter = require("./routes/users");
 
 // Mongoose Config
-const mongoose = require('mongoose');
-const url = (process.env.DATABASEURL) || 'mongodb://localhost:27017/YelpCamp';
+const mongoose = require("mongoose");
+const url = (process.env.DATABASEURL) || "mongodb://localhost:27017/YelpCamp";
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Global Middlewares
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
 // PASSPORT CONFIGURATION
-app.use(require('express-session')({
+app.use(require("express-session")({
     name: "session-id",
     secret: "Passport-Authentication",
     resave: false,
@@ -68,11 +68,11 @@ app.use("/campgrounds/:id/comments", commentRouter);
 app.use("/users", userRouter);
 
 connect.then(() => {
-    console.log("Correctly Connected to MongoDB Server at " + url);
+    console.log(`Correctly Connected to MongoDB Server at ${url}`);
 }).catch((err) => console.log(err));
 
-var port = process.env.PORT || '3000';
-var host = process.env.HOST || 'localhost';
+var port = process.env.PORT || "3000";
+var host = process.env.HOST || "localhost";
 app.listen(port, () => {
-    console.log("The Yelp Camp Server is up and running at http://" + host + ":" + port);
+    console.log(`The Yelp Camp Server is up and running at http://${host}:${port}`);
 });
