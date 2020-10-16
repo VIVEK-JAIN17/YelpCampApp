@@ -65,7 +65,7 @@ router.route("/login")
 
 router.get("/logout", auth.isLoggedin, (req, res) => {
     console.log("logging out user ... " + req.session.passport.user);
-    req.session.destroy();
+    req.session = null;
     res.clearCookie("session-id");
     console.log("logged out sccessfully");
     res.redirect("/");

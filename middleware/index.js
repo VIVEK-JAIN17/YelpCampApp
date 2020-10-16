@@ -1,5 +1,5 @@
-const Campground = require('../models/campground');
-const Comment = require('../models/comment');
+const Campground = require("../models/campground");
+const Comment = require("../models/comment");
 
 exports.isLoggedin = (req, res, next) => {
     if (req.isAuthenticated()) {

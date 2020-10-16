@@ -26,6 +26,10 @@ const mongoose = require("mongoose");
 const url = (process.env.DATABASEURL) || "mongodb://localhost:27017/YelpCamp";
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
+// Express Session
+const session = require("express-session");
+const MongoStore = require('connect-mongo')(session);
+
 // Global Middlewares
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,14 +37,25 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
-// PASSPORT CONFIGURATION
-app.use(require("express-session")({
+// Session Configuraiton
+const connection = mongoose.createConnection(url, { useNewUrlParser: true, useUnifiedTopology: true });
+app.use(session({
     name: "session-id",
-    secret: "Passport-Authentication",
+    secret: process.env.SERVER_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    unset: "destroy",
+    cookie: {
+        maxAge: 3600000,
+        httpOnly: true
+    },
+    store: new MongoStore({
+        mongooseConnection: connection,
+        autoRemove: "native"
+    })
 }));
 
+// PASSPORT CONFIGURATION
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
