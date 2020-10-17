@@ -57,9 +57,9 @@
         </div>
         <div class="col-sm-10 col-md-8 col-lg-9">
             <div class="figure border mb-4 rounded">
-                <img class="figure-img img-fluid" width="100%" src="<%= campground.image.url %>"
+                <img class="figure-img img-fluid mb-0" width="100%" src="<%= campground.image.url %>"
                     alt="<%= campground.name%>" />
-                <div class="figure-caption px-2">
+                <div class="figure-caption bg bg-light p-2 py-3">
                     <span>
                         <h6 class="title float-right">$ <%= campground.price.toFixed(2)/100 %>/night</h6>
                     </span>
@@ -101,33 +101,38 @@
                     <% } %>
                     <%campground.comments.forEach(comment => { %>
                     <li class="mb-3">
-                        <div>
-                            <small class="float-right"><%= moment(comment.createdAt).fromNow() %></small>
-                            <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
-                            <span>
-                                <% for(var i = 0; i < comment.rating; i++) {  %>
-                                <i class="fa fa-star"></i>
-                                <% } %>
-                                <% for(var i = comment.rating; i < 5; i++) {  %>
-                                <i class="fa fa-star-o"></i>
-                                <% } %>
-                            </span>
+                        <div class="row">
+                            <div class="col-lg-9 mb-0 pr-0">
+                                <strong><i class="fa fa-user-circle-o"></i> <%= comment.author.username %></strong>
+                                <span>
+                                    <% for(var i = 0; i < comment.rating; i++) {  %>
+                                    <i class="fa fa-star"></i>
+                                    <% } %>
+                                    <% for(var i = comment.rating; i < 5; i++) {  %>
+                                    <i class="fa fa-star-o"></i>
+                                    <% } %>
+                                </span>
+                                <p class=""><%= comment.comment %></p>
+                            </div>
+                            <div class="col text-right mt-0 pt-0 pl-lg-0">
+                                <small class=""><%= moment(comment.createdAt).fromNow() %></small>
+                                <div class="d-inline d-lg-block">
+                                    <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+                                    <small class="">
+                                        <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit"
+                                            class="btn primary effect btn-sm px-0"> <i class="fa fa-pencil"></i> </a>
+                                        <form class="d-inline" method="POST"
+                                            action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE">
+                                            <button class="btn danger effect btn-sm" type="submit">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </small>
+                                    <% } %>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                            <small class="float-right">
-                                <a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit"
-                                    class="btn primary btn-sm px-0"> <i class="fa fa-pencil"></i> </a>
-                                <form class="d-inline" method="POST"
-                                    action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE">
-                                    <button class="btn danger btn-sm" type="submit">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </small>
-                            <% } %>
-                            <p class=""><%= comment.comment %></p>
-                        </div>
+
                     </li>
                     <%})%>
                 </ul>

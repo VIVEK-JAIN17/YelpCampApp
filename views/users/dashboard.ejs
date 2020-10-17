@@ -1,5 +1,5 @@
 <%- include('../partials/header') -%>
-<div class="container dashboard">
+<div class="container-lg dashboard">
     <div class="row dashboard">
         <div class="col-md-5 col-lg-4 p-4" id="vertical-navbar">
             <div class="img-thumbnail">
@@ -37,15 +37,17 @@
                     <% }) %>
                 </ul>
                 <div class="list-header mt-5">
-                    <strong>add new campground</strong>
-                    <a class="float-right" href="/campgrounds/new"><i class="btn primary effect fa fa-plus-square-o"></i></a>
+                    <strong>add new campground </strong>
+                    <a class="float-right" href="/campgrounds/new">
+                        <i class="btn primary effect fa fa-plus-square-o pl-0"></i>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="col-md-7 col-lg-8 p-4">
 
             <div class="dashboard-username"><%= user.username %>'s dashboard</div>
-            <form class="mt-4" action="/users/<%= user._id %>/edit" method="GET">
+            <form class="mt-4">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="firstname" class="form-label"> Firstname </label>
@@ -98,10 +100,8 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-auto">
-                        <input type="submit" class="btn btn-primary btn" value="Edit Details" />
-                    </div>
-                    <div class="form-group col-auto">
-                        <a href="/users/<%= user._id %>/profile" class="btn btn-primary btn"> View Profile </a>
+                        <a href="/users/<%= user._id %>/edit" class="btn btn-primary">Edit Details</a>
+                        <a href="/users/<%= user._id %>/profile" class="btn btn-primary"> View Profile </a>
                     </div>
                 </div>
             </form>

@@ -15,7 +15,7 @@
     </div>
     <div class="row justify-content-around d-none d-md-flex">
         <% campgrounds.forEach(function(campground){ %>
-        <div class="col-md-6 col-lg-4 my-3">
+        <div class="col-md-6 col-lg-4 my-4" id="index-wrapper">
             <div class="card card-index">
                 <div class="card-img">
                     <img class="img-fluid" src="<%= campground.image.url %>" alt="<%= campground.name%>">
@@ -35,7 +35,7 @@
         <%});%>
     </div>
     <div class="row justify-content-center d-flex d-md-none">
-        <div class="my-4 mx-3 mx-sm-5 px-sm-3">
+        <div class="my-4 mx-sm-5 px-sm-3">
             <ul class="list-unstyled index blur">
                 <% campgrounds.forEach(function(campground){ %>
                 <li>
@@ -47,9 +47,11 @@
                     <div class="mb-4 text-left">
                         <header class="mb-2">
                             <h4 class="mb-1"> <%= campground.name %> </h4>
-                            <div class="text-muted"> Posted By ~ <em><a
-                                        href="/users/<%= campground.author.id %>/profile">
-                                        <%= campground.author.username %></a> </em></div>
+                            <div class="text-muted"> Posted By ~ <em>
+                                    <a href="/users/<%= campground.author.id %>/profile">
+                                        <%= campground.author.username %>
+                                    </a> </em>
+                            </div>
                         </header>
                         <div>
                             <p><%- campground.description.substring(0,100) -%>...</p>

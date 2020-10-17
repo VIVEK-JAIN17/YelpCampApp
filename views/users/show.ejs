@@ -30,8 +30,10 @@
             <ul class="list-unstyled">
                 <% campgrounds.forEach(campground => { %>
                 <li class="media">
-                    <img class="img-fluid align-self-center rounded" src="<%= campground.image.url %>" width="250"
-                        alt="<%= campground.name %>">
+                    <a href="/campgrounds/<%= campground._id %>">
+                        <img class="img-fluid align-self-center rounded" src="<%= campground.image.url %>" width="250"
+                            alt="<%= campground.name %>">
+                    </a>
                     <div class="media-body">
                         <div class="media-header">
                             <h4><a href="/campgrounds/<%= campground._id%>"> <%= campground.name%></a></h4>
@@ -63,6 +65,10 @@
         </div>
         <div class="col-sm-11 mb-5 d-md-none blur">
             <ul class="list-unstyled">
+                <% if(campgrounds.length === 0) { %>
+                <img src="/images/placeholder_images/thinking-man.svg" alt="thinking-man"
+                    class="img-fluid placeholder_images" />
+                <% } %>
                 <% campgrounds.forEach(campground => { %>
                 <li class="stack">
                     <div class="px-3">

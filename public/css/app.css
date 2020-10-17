@@ -4,8 +4,6 @@ html {
 }
 
 body {
-  background-color: #f4f5f8;
-  background-image: linear-gradient(135deg, #f4f5f8 0%, #dbe0e9 74%);
   margin: 0 0 75px !important;
 }
 
@@ -39,7 +37,7 @@ body {
 }
 
 .scrolled {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25), 0 5px 10px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.35), 0 5px 10px rgba(0, 0, 0, 0.55);
 }
 
 .navbar .nav-item .nav-link {
@@ -104,15 +102,15 @@ body {
 }
 
 .card-index {
-  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1),
+  box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1),
     0px 0px 10px rgba(0, 0, 0, 0.2);
   z-index: 500;
   border: none;
 }
 
 .card-index:hover {
-  box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.1),
-    0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.25),
+    0px 0px 10px 2px rgba(0, 0, 0, 0.4);
   transform: translate3d(0, -20px, 30px);
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
