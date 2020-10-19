@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Campground = require("../models/campground");
-const Comment = require("../models/comment");
 const User = require("../models/user");
 const auth = require("../middleware");
 
@@ -17,12 +16,18 @@ router.get("/:id/profile", (req, res) => {
                             req.flash("error", "Something Went Wrong !!");
                             res.redirect("back");
                         }
-                    }).catch((err) => { console.log(err); });
+                    }).catch((err) => {
+                        req.flash("error", `Something Went Wrong !! ${err.message}`);
+                        res.redirect("back");
+                    });
             } else {
                 req.flash("error", "Something Went Wrong !!");
                 res.redirect("back");
             }
-        }).catch((err) => { console.log(err); });
+        }).catch((err) => {
+            req.flash("error", `Something Went Wrong !! ${err.message}`);
+            res.redirect("back");
+        });
 });
 
 router.get("/:id/edit", auth.verifyUser, (req, res) => {
@@ -40,7 +45,10 @@ router.put("/:id/profile", auth.verifyUser, (req, res) => {
         .then((user) => {
             req.flash("success", "Updated User Credentials !!");
             res.redirect(`/users/${req.params.id}/dashboard`);
-        }).catch((err) => { console.log(err); });
+        }).catch((err) => {
+            req.flash("error", `Something Went Wrong !! ${err.message}`);
+            res.redirect("back");
+        });
 });
 
 router.get("/:id/dashboard", auth.verifyUser, (req, res) => {
@@ -60,7 +68,10 @@ router.get("/:id/dashboard", auth.verifyUser, (req, res) => {
                 req.flash("error", "Something Went Wrong !!");
                 res.redirect("back");
             }
-        }).catch((err) => { console.log(err); });
+        }).catch((err) => {
+            req.flash("error", `Something Went Wrong !! ${err.message}`);
+            res.redirect("back");
+        });
 });
 
 module.exports = router;
