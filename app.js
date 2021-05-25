@@ -5,7 +5,6 @@ const express = require("express");
 const app = express();
 
 // Other
-const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const moment = require("moment");
@@ -32,7 +31,7 @@ const MongoStore = require('connect-mongo')(session);
 
 // Global Middlewares
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
@@ -82,8 +81,8 @@ app.use("/campgrounds", campRouter);
 app.use("/campgrounds/:id/comments", commentRouter);
 app.use("/users", userRouter);
 
-connect.then(() => {
-    console.log(`Correctly Connected to MongoDB Server at ${url}`);
+connect.then((conn) => {
+    console.log(`Correctly Connected to MongoDB Server at ${conn.connection.host}`);
 }).catch((err) => console.log(err));
 
 var port = process.env.PORT || "3000";
